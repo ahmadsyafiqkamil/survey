@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aplikasi Survey</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'assets/css/icons/icomoon/styles.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/components.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/colors.css' %}" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery.min.js'%}"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{#    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/ui/nicescroll.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/ui/drilldown.js' %}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{% static 'assets/js/plugins/ui/prism.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/pages/form_layouts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/pages/form_inputs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/ui/ripple.min.js' %}"></script>
+    <!-- /theme JS files -->
+    <!-- Surveyjs -->
+
+    {% if user.is_analis or user.is_admin %}
+        <script src="{% static 'assets/js/plugins/survey/knockout-min.js' %}"></script>
+        <script src="{% static 'assets/js/plugins/survey/survey.ko.js' %}"></script>
+        <script src="{% static 'assets/js/plugins/survey/ace.min.js' %}" type="text/javascript"
+                charset="utf-8"></script>
+        <script src="{% static 'assets/js/plugins/survey/worker-json.js' %}" type="text/javascript"
+                charset="utf-8"></script>
+        <script src="{% static 'assets/js/plugins/survey/mode-json.js' %}" type="text/javascript"
+                charset="utf-8"></script>
+        <script src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+        <script src="{% static 'assets/js/plugins/survey/surveyeditor.js' %}"></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+        <link href="{% static 'assets/css/survey/surveyeditor.css' %}" type="text/css" rel="stylesheet"/>
+
+    {% elif user.is_surveyor %}
+        <link href="{% static 'assets/css/survey/survey.css' %}" type="text/css" rel="stylesheet"/>
+        <script src="{% static 'assets/js/plugins/survey/survey.jquery.min.js' %}"></script>
+        <script src="{% static 'assets/js/plugins/survey/popper.min.js' %}"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        {#        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>#}
+    {% endif %}
+</head>
+
+<body>
+
+<!-- Main navbar -->
+<div class="navbar navbar-inverse bg-indigo">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="index.html"><img src="{% static 'assets/images/logo_light.png' %}" alt=""></a>
+
+        <ul class="nav navbar-nav pull-right visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav">
+            <li>
+                <a class="sidebar-control sidebar-main-toggle hidden-xs" data-popup="tooltip" title="Collapse main"
+                   data-placement="bottom" data-container="body">
+                    <i class="icon-paragraph-justify3"></i>
+                </a>
+            </li>
+
+
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown dropdown-user">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    {#            <img src="assets/images/placeholder.jpg" alt="">#}
+                    <span>{{ user.get_full_name }}</span>
+                    <i class="caret"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
+                    <li><a href="javascript:{document.getElementById('logout').submit()}"><i class="icon-switch2"></i>
+                        Logout</a>
+                        <form id="logout" action="{% url 'accounts:logout' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /main navbar -->
+
+
+<!-- Page header -->
+<!-- <div class="page-header">
+<div class="page-header-content">
+<div class="page-title">
+<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Sidebars</span> - Default Collapsible</h4>
+
+<ul class="breadcrumb breadcrumb-caret position-right">
+<li><a href="index.html">Home</a></li>
+<li><a href="sidebar_default_collapse.html">Sidebars</a></li>
+<li class="active">Default collapsible</li>
+</ul>
+</div>
+
+<div class="heading-elements">
+<div class="heading-btn-group">
+<a href="#" class="btn btn-link btn-float has-text text-size-small"><i class="icon-bars-alt text-indigo-400"></i><span>Statistics</span></a>
+<a href="#" class="btn btn-link btn-float has-text text-size-small"><i class="icon-calculator text-indigo-400"></i> <span>Invoices</span></a>
+<a href="#" class="btn btn-link btn-float has-text text-size-small"><i class="icon-calendar5 text-indigo-400"></i> <span>Schedule</span></a>
+</div>
+</div>
+</div>
+</div> -->
+<!-- /page header -->
+
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-main sidebar-default">
+            <div class="sidebar-content">
+
+                <!-- Main navigation -->
+                <div class="sidebar-category sidebar-category-visible">
+                    <div class="sidebar-user-material">
+                        <div class="category-content">
+                            <div class="sidebar-user-material-content">
+                                <a href="#"><img src="{% static 'assets/images/placeholder.jpg' %}"
+                                                 class="img-circle img-responsive" alt=""></a>
+                                <h6>Victoria Baker</h6>
+                                <span class="text-size-small">Santa Ana, CA</span>
+                            </div>
+
+                            <div class="sidebar-user-material-menu">
+                                <a href="#user-nav" data-toggle="collapse"><span>My account</span> <i class="caret"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="navigation-wrapper collapse" id="user-nav">
+                            <ul class="navigation">
+                                <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
+                                <li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="category-content no-padding">
+                        <ul class="navigation navigation-main navigation-accordion">
+
+                            <!-- Main -->
+                            <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i>
+                            </li>
+                            {% if user.is_staff %}
+                                <li><a href="{% url 'pm:dashboard' %}"><i class="icon-home4"></i> <span>Dashboard</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-stack2"></i> <span>New Project</span></a>
+                                    <ul>
+                                        <li><a href="{% url 'pm:proyek' %}"><i class="icon-stack2"></i>
+                                            <span>Proyek</span></a></li>
+                                        <li><a href="{% url 'pm:list_organisasi' %}"><i class="icon-stack2"></i>
+                                            <span>List Proyek</span></a></li>
+
+                                    </ul>
+
+                                <li><a href="{% url 'pm:perangkat' %}"><i class="glyphicon glyphicon-th-list"></i>Perangkat</a>
+                                </li>
+
+
+                                </li>
+
+                            {% elif user.is_analis %}
+                                <li><a href="{% url 'analis:dashboard' %}"><i class="icon-home4"></i>
+                                    <span>Dashboard</span></a></li>
+                                <li>
+                                    <a href="#"><i class="icon-stack2"></i> <span>New Project</span></a>
+                                    <ul>
+                                        {#                                    <li><a href="{%url 'organisasi'%}"><i class="glyphicon glyphicon-th"></i>New Organization</a></li>#}
+                                        {#                                    <li><a href="{%url 'perangkat'%}"><i class="glyphicon glyphicon-th-list"></i>New Tools</a></li>#}
+                                    </ul>
+                                </li>
+
+                            {% elif user.is_surveyor %}
+                                <li><a href="{% url 'surveyor:dashboard' %}"><i class="icon-home4"></i>
+                                    <span>Dashboard</span></a></li>
+                                <li>
+                                    <a href="#"><i class="icon-stack2"></i> <span>New Project</span></a>
+                                    <ul>
+                                        {#                                    <li><a href="{%url 'organisasi'%}"><i class="glyphicon glyphicon-th"></i>New Organization</a></li>#}
+                                        {#                                    <li><a href="{%url 'perangkat'%}"><i class="glyphicon glyphicon-th-list"></i>New Tools</a></li>#}
+                                    </ul>
+                                </li>
+
+                            {% endif %}
+
+                        </ul>
+                        </li>
+                        <!-- /page kits -->
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- /main navigation -->
+
+            </div>
+        </div>
+        <!-- /main sidebar -->
+
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+
+<!-- Footer -->
+<div class="navbar navbar-default navbar-fixed-bottom footer">
+	<ul class="nav navbar-nav visible-xs-block">
+		<li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i class="icon-circle-up2"></i></a></li>
+	</ul>
+
+	<div class="navbar-collapse collapse" id="footer">
+		<div class="navbar-text">
+			&copy; {% now "Y" %}. <a href="#">Ahmad Syafiq Kamil</a>
+		</div>
+
+		<div class="navbar-right">
+			<ul class="nav navbar-nav">
+				<!-- <li><a href="#">About</a></li>
+				<li><a href="#">Terms</a></li>
+				<li><a href="#">Contact</a></li> -->
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<!-- /footer -->
+
+{% block costum_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,65 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="content-wrapper">
+
+<!-- Sidebars overview -->
+  <div class="panel panel-success ">
+    <div class="panel-heading">
+      <h5 class="panel-title">Project</h5>
+      <div class="heading-elements">
+        <ul class="icons-list">
+          <li><a data-action="collapse"></a></li>
+          <li><a data-action="reload"></a></li>
+          <li><a data-action="close"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      dashboard surveyor
+{#      <div id="surveyContainer"></div>#}
+    </div>
+  </div>
+
+  <!-- /sidebar classes -->
+
+</div>
+
+<script type="text/javascript">
+  var surveyJSON = { title: "Tell us, what technologies do you use?", pages: [
+  { name:"page1", questions: [
+      { type: "radiogroup", choices: [ "Yes", "No" ], isRequired: true, name: "frameworkUsing",title: "Do you use any front-end framework like Bootstrap?" },
+      { type: "checkbox", choices: ["Bootstrap","Foundation"], hasOther: true, isRequired: true, name: "framework", title: "What front-end framework do you use?", visibleIf: "{frameworkUsing} = 'Yes'" }
+   ]},
+  { name: "page2", questions: [
+    { type: "radiogroup", choices: ["Yes","No"],isRequired: true, name: "mvvmUsing", title: "Do you use any MVVM framework?" },
+    { type: "checkbox", choices: [ "AngularJS", "KnockoutJS", "React" ], hasOther: true, isRequired: true, name: "mvvm", title: "What MVVM framework do you use?", visibleIf: "{mvvmUsing} = 'Yes'" } ] },
+  { name: "page3",questions: [
+    { type: "comment", name: "about", title: "Please tell us about your main requirements for Survey library" } ] }
+ ]
+};
+
+Survey.StylesManager.applyTheme("bootstrap");
+
+
+
+var survey = new Survey.Model(surveyJSON);
+$("#surveyContainer").Survey({
+    model:survey,
+    onComplete:sendDataToServer
+});
+
+function sendDataToServer(survey) {
+  var resultAsString = JSON.stringify(survey.data);
+  alert(resultAsString); //send Ajax request to your web server.
+}
+
+survey.surveyPostId = 'e544a02f-7fff-4ffb-b62d-6a9aa16efd7c';
+//You may call survey.sendResult function as another option.
+function sendDataToServer(survey) {
+  survey.sendResult('e544a02f-7fff-4ffb-b62d-6a9aa16efd7c');
+}
+
+</script>
+{%endblock%}
