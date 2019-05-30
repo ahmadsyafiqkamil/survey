@@ -4,9 +4,9 @@
     <div class="content-wrapper">
 
         <!-- Sidebars overview -->
-        <div class="panel panel-success ">
+        <div class="panel panel-success panel-bordered ">
             <div class="panel-heading">
-                <h5 class="panel-title">Project</h5>
+                <h5 class="panel-title">{{ proyek.nama }}</h5>
                 <div class="heading-elements">
                     <ul class="icons-list">
                         <li><a data-action="collapse"></a></li>
@@ -15,21 +15,59 @@
                     </ul>
                 </div>
             </div>
-
             <div class="panel-body">
-                {{ proyek.nama }}
-                <br>
-                {{ proyek.pjProyek }}
+                <h1>Penanggung Jawab :{{ proyek.pjProyek }}</h1>
+
+
                 <br>
                 {{ proyek.user.get_full_name }}
                 <br>
-                <ul>
-                    {% for organisasi in proyek.get_organisasi %}
-                        <li>{{ organisasi }}</li>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Nama Organisasi
+                        </th>
+                        <th>
+                            Nama Narasumber
+                        </th>
+                        <th>
+                            Aksi
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for foo in organisasi %}
+                        <tr>
+                            <td>{{ foo.nama_organisasi }}</td>
+                            <td>
+                                {% if foo.narasumber is None %}
+                                    Belum ada Narasumber
+                                {% else %}
+                                    {{ foo.narasumber }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="{% url 'pm:detail_organisasi' foo.pk %}">EDIT</a></li>
+                                            <li><a href="">HAPUS</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+
+
                     {% endfor %}
-                </ul>
 
-
+                    </tbody>
+                </table>
             </div>
         </div>
 

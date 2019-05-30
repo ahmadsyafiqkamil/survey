@@ -21,7 +21,7 @@
     <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
     <!-- <script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery.min.js'%}"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-{#    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
+    {#    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{% static 'assets/js/core/libraries/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
@@ -35,6 +35,7 @@
     <script type="text/javascript" src="{% static 'assets/js/pages/form_layouts.js' %}"></script>
     <script type="text/javascript" src="{% static 'assets/js/pages/form_inputs.js' %}"></script>
     <script type="text/javascript" src="{% static 'assets/js/plugins/ui/ripple.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/ui/nicescroll.min.js' %}"></script>
     <!-- /theme JS files -->
     <!-- Surveyjs -->
 
@@ -189,7 +190,7 @@
                                     <ul>
                                         <li><a href="{% url 'pm:proyek' %}"><i class="icon-stack2"></i>
                                             <span>Proyek</span></a></li>
-                                        <li><a href="{% url 'pm:list_organisasi' %}"><i class="icon-stack2"></i>
+                                        <li><a href="{% url 'pm:list_proyek' %}"><i class="icon-stack2"></i>
                                             <span>List Proyek</span></a></li>
 
                                     </ul>
@@ -249,28 +250,31 @@
 
 <!-- Footer -->
 <div class="navbar navbar-default navbar-fixed-bottom footer">
-	<ul class="nav navbar-nav visible-xs-block">
-		<li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i class="icon-circle-up2"></i></a></li>
-	</ul>
+    <ul class="nav navbar-nav visible-xs-block">
+        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i
+                class="icon-circle-up2"></i></a></li>
+    </ul>
 
-	<div class="navbar-collapse collapse" id="footer">
-		<div class="navbar-text">
-			&copy; {% now "Y" %}. <a href="#">Ahmad Syafiq Kamil</a>
-		</div>
+    <div class="navbar-collapse collapse" id="footer">
+        <div class="navbar-text">
+            &copy; {% now "Y" %}. <a href="#">Ahmad Syafiq Kamil</a>
+        </div>
 
-		<div class="navbar-right">
-			<ul class="nav navbar-nav">
-				<!-- <li><a href="#">About</a></li>
-				<li><a href="#">Terms</a></li>
-				<li><a href="#">Contact</a></li> -->
-			</ul>
-		</div>
-	</div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!-- <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Contact</a></li> -->
+            </ul>
+        </div>
+    </div>
 </div>
 
 
 <!-- /footer -->
 
-{% block costum_js %}{% endblock %}
+{% block costum_js %}
+
+{% endblock %}
 </body>
 </html>
