@@ -34,7 +34,6 @@
                             <tr>
                                 <td>{{ proyek.nama }}</td>
                                 <td>{{ proyek.pjProyek }}</td>
-                                {#                            <td>{{ proyek.get_organisasi }}</td>#}
                                 <td>
                                     <ul class="icons-list">
                                         <li class="dropdown">
@@ -42,7 +41,7 @@
                                                 <i class="icon-menu9"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a href="{% url 'pm:detail_proyek' proyek.pk %}">EDIT</a></li>
+                                                <li><a href="{% url 'pm:detail_proyek' proyek.pk %}">DETAIL</a></li>
                                                 <li><a href="{% url 'pm:hapus_proyek' proyek.pk %}">HAPUS</a></li>
                                             </ul>
                                         </li>

@@ -8,7 +8,6 @@ class proyekForm(forms.ModelForm):
 
     class Meta:
         model = proyek
-        fields = ('nama', 'deskripsi', 'pjProyek')
         fields = ('nama', 'deskripsi', 'user', 'pjProyek')
         labels = {
             'nama': 'Nama Proyek',
@@ -56,3 +55,23 @@ organisasiFormSet = modelformset_factory(
         }),
     }
 )
+
+class formOrganisasi(forms.ModelForm):
+    class Meta:
+        model = organisasi
+        fields = ('nama_organisasi', 'narasumber')
+        labels = {
+            'nama_organisasi': 'Nama Organisasi',
+            'narasumber': 'Narasumber Organisasi',
+        }
+        # widgets = {
+        #     'nama_organisasi': forms.TextInput(attrs={
+        #     'class': 'form-control',
+        #     'placeholder': 'Masukkan Nama Organisasi'
+        # }),
+        #     'narasumber' : forms.TextInput(attrs={
+        #     'class': 'form-control',
+        #     'placeholder': 'Masukkan Nama Narasumber'
+        # }),
+        #
+        # }

@@ -16,12 +16,11 @@
                 </div>
             </div>
             <div class="panel-body">
-                <h1>Penanggung Jawab :{{ proyek.pjProyek }}</h1>
-
-
+                Penanggung Jawab :{{ proyek.pjProyek }}
                 <br>
                 {{ proyek.user.get_full_name }}
                 <br>
+                <a href="{% url 'pm:update_proyek' proyek.id %}">EDIT</a>
                 <table class="table">
                     <thead>
                     <tr>
@@ -56,7 +55,7 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a href="{% url 'pm:detail_organisasi' foo.pk %}">EDIT</a></li>
-                                            <li><a href="">HAPUS</a></li>
+                                            <li><a href="{% url 'pm:hapus_organisasi' foo.pk %}">HAPUS</a></li>
                                         </ul>
                                     </li>
                                 </ul>

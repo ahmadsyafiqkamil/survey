@@ -2,28 +2,38 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from django.http import HttpResponseRedirect
-from .form import proyekForm, organisasiFormSet
+from django.urls import reverse_lazy
+from .form import proyekForm, organisasiFormSet, formOrganisasi
 from .models import organisasi, proyek
-from accounts.models import User
+from django.forms.models import modelform_factory
 
 
 @method_decorator(login_required, name='dispatch')
 class listProyek(generic.ListView):
     model = proyek
     context_object_name = 'proyeks'
-    template_name = 'pm/list_organisasi.html'
+    template_name = 'pm/list_proyek.html'
 
 
 # @method_decorator(login_required, name='dispatch')
 # class detailorganisasi(generic.DetailView):
 #     model = organisasi
 #     template_name = 'pm/detail-organisasi.html'
-
+@method_decorator(login_required, name='dispatch')
 class detailorganisasi(generic.edit.UpdateView):
     model = organisasi
-    fields = ['nama_organisasi','narasumber']
+    fields = ['nama_organisasi', 'narasumber']
     template_name = 'pm/detail-organisasi.html'
+
+    def form_valid(self, form):
+        post = form.save()
+        return redirect('pm:list_proyek')
+
+
+class deleteOrganisasi(generic.DeleteView):
+    model = organisasi
+    template_name = 'pm/delete.html'
+    success_url = reverse_lazy('pm:list_proyek')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -40,14 +50,19 @@ class detailProyek(generic.TemplateView):
 @method_decorator(login_required, name='dispatch')
 class updateProyek(generic.edit.UpdateView):
     model = proyek
+    fields = ['nama', 'deskripsi', 'user', 'pjProyek']
+    template_name = 'pm/update-proyek.html'
+
+    def form_valid(self, form):
+        post = form.save()
+        return redirect('pm:list_proyek')
 
 
-@method_decorator(login_required, name='dispatch')
 class deleteProyek(generic.edit.DeleteView):
     model = proyek
 
 
-@method_decorator(login_required, name='dispatch')
+@login_required
 def buatproject(request):
     if request.method == 'GET':
         formProyek = proyekForm(request.GET or None)

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'projectmanajer.apps.ProjectmanajerConfig',
     'analis.apps.AnalisConfig',
     'surveyor.apps.SurveyorConfig',
+    'widget_tweaks',
 
 ]
 

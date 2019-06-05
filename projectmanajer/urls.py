@@ -12,8 +12,9 @@ urlpatterns = [
     path('list-proyek/', views.listProyek.as_view(), name='list_proyek'),
     path('detail-proyek/<int:pk>', views.detailProyek.as_view(), name='detail_proyek'),
     path('hapus-proyek/<int:pk>', views.deleteProyek.as_view(), name='hapus_proyek'),
+    path('update-proyek/<int:pk>', views.updateProyek.as_view(), name='update_proyek'),
     # path organisasi
     path('detail-organisasi/<int:pk>', views.detailorganisasi.as_view(), name='detail_organisasi'),
-    # path('detail-organisasi/<int:pk>', views.detailOrganisasi, name='detail_organisasi'),
+    path('delete-organisasi/<int:pk>', views.deleteOrganisasi.as_view(), name='hapus_organisasi')
 
 ]
