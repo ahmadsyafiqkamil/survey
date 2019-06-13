@@ -1,11 +1,10 @@
 from django import forms
 from django.forms import modelformset_factory
-from .models import proyek, organisasi
+from .models import proyek, organisasi,perangkat
 from accounts.models import User
 
 
 class proyekForm(forms.ModelForm):
-
     class Meta:
         model = proyek
         fields = ('nama', 'deskripsi', 'user', 'pjProyek')
@@ -56,6 +55,7 @@ organisasiFormSet = modelformset_factory(
     }
 )
 
+
 class formOrganisasi(forms.ModelForm):
     class Meta:
         model = organisasi
@@ -64,14 +64,13 @@ class formOrganisasi(forms.ModelForm):
             'nama_organisasi': 'Nama Organisasi',
             'narasumber': 'Narasumber Organisasi',
         }
-        # widgets = {
-        #     'nama_organisasi': forms.TextInput(attrs={
-        #     'class': 'form-control',
-        #     'placeholder': 'Masukkan Nama Organisasi'
-        # }),
-        #     'narasumber' : forms.TextInput(attrs={
-        #     'class': 'form-control',
-        #     'placeholder': 'Masukkan Nama Narasumber'
-        # }),
-        #
-        # }
+
+
+# class formPerangkat(forms.ModelForm):
+#     class Meta:
+#         model = perangkat
+#         fields = ('proyek',)
+#         labels = {
+#             'proyek': 'Proyek',
+#
+#         }

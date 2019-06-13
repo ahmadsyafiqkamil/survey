@@ -12,7 +12,7 @@ class proyek(models.Model):
     nama = models.CharField(max_length=255, verbose_name="Nama Proyek")
     deskripsi = models.TextField(verbose_name="Deskripsi Proyek");
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    pjProyek = models.CharField(max_length=255, verbose_name="PJ Proyek")
+    pjProyek = models.CharField(max_length=255, verbose_name="Penanggung Jawav Proyek")
 
     # id_user = models.ForeignKey(analis,on_delete = models.CASCADE)
     class Meta:
@@ -58,3 +58,5 @@ class perangkat(models.Model):
 
     def __str__(self):
         return self.perangkat
+
+

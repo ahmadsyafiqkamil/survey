@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
 from .form import proyekForm, organisasiFormSet, formOrganisasi
-from .models import organisasi, proyek
+from .models import organisasi, proyek, perangkat
 from django.forms.models import modelform_factory
 
 
@@ -15,10 +15,7 @@ class listProyek(generic.ListView):
     template_name = 'pm/list_proyek.html'
 
 
-# @method_decorator(login_required, name='dispatch')
-# class detailorganisasi(generic.DetailView):
-#     model = organisasi
-#     template_name = 'pm/detail-organisasi.html'
+
 @method_decorator(login_required, name='dispatch')
 class detailorganisasi(generic.edit.UpdateView):
     model = organisasi
@@ -97,3 +94,10 @@ class dashboardView(generic.TemplateView):
 @method_decorator(login_required, name='dispatch')
 class perangkatView(generic.TemplateView):
     template_name = 'pm/perangkat.html'
+
+
+class perangkat_create(generic.edit.CreateView):
+    model = perangkat
+    fields = ['proyek','perangkat']
+    template_name = 'pm/create-perangkat.html'
+    success_url = reverse_lazy('pm:perangkat')
