@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import modelformset_factory
-from .models import proyek, organisasi,perangkat
+from .models import proyek, organisasi, perangkat
+import json
 from accounts.models import User
 
 
@@ -41,6 +42,10 @@ class proyekForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(proyekForm, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(staff= True)
+
 
 organisasiFormSet = modelformset_factory(
     organisasi,
@@ -56,21 +61,20 @@ organisasiFormSet = modelformset_factory(
 )
 
 
-class formOrganisasi(forms.ModelForm):
+class formPerangkat(forms.ModelForm):
     class Meta:
-        model = organisasi
-        fields = ('nama_organisasi', 'narasumber')
-        labels = {
-            'nama_organisasi': 'Nama Organisasi',
-            'narasumber': 'Narasumber Organisasi',
+        model = perangkat
+        fields = ['proyek', 'perangkat']
+
+        widgets = {
+            'perangkat' : forms.Textarea(attrs={
+                'placeholder': 'Masukkan hasil dari tab JsonEditor',
+            })
         }
 
+    def __init__(self, *args, **kwargs):
+        super(formPerangkat, self).__init__(*args, **kwargs)
+        self.fields['proyek'].queryset = proyek.objects.exclude(id__in=perangkat.objects.values("proyek_id"))
 
-# class formPerangkat(forms.ModelForm):
-#     class Meta:
-#         model = perangkat
-#         fields = ('proyek',)
-#         labels = {
-#             'proyek': 'Proyek',
-#
-#         }
+
+

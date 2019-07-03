@@ -17,6 +17,8 @@ urlpatterns = [
     path('detail-organisasi/<int:pk>', views.detailorganisasi.as_view(), name='detail_organisasi'),
     path('delete-organisasi/<int:pk>', views.deleteOrganisasi.as_view(), name='hapus_organisasi'),
     # path perangkat
-    path('create-perangkat',views.perangkat_create.as_view(),name = 'create_perangkat')
+    path('buat-perangkat', views.buat_perangkat.as_view(), name='create_perangkat'),
+    path('lihat-perangkat/<int:pk>', views.lihat_perangkat.as_view(), name='view_perangkat'),
+    path('delete-perangkat/<int:pk>', views.hapus_perangkat.as_view(), name='hapus_perangkat'),
 
 ]

@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
-from .form import proyekForm, organisasiFormSet, formOrganisasi
+from .form import proyekForm, organisasiFormSet, formPerangkat
 from .models import organisasi, proyek, perangkat
 from django.forms.models import modelform_factory
 
@@ -13,7 +13,6 @@ class listProyek(generic.ListView):
     model = proyek
     context_object_name = 'proyeks'
     template_name = 'pm/list_proyek.html'
-
 
 
 @method_decorator(login_required, name='dispatch')
@@ -96,8 +95,24 @@ class perangkatView(generic.TemplateView):
     template_name = 'pm/perangkat.html'
 
 
-class perangkat_create(generic.edit.CreateView):
+class buat_perangkat(generic.edit.CreateView):
     model = perangkat
-    fields = ['proyek','perangkat']
+    # fields = ['proyek','perangkat']
+    form_class = formPerangkat
     template_name = 'pm/create-perangkat.html'
     success_url = reverse_lazy('pm:perangkat')
+
+
+class lihat_perangkat(generic.TemplateView):
+    template_name = 'pm/lihat-perangkat.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(lihat_perangkat, self).get_context_data(*args, **kwargs)
+        context['perangkat'] = get_object_or_404(perangkat, proyek_id=self.kwargs.get('pk'))
+        return context
+
+
+class hapus_perangkat(generic.edit.DeleteView):
+    model = perangkat
+    template_name = 'pm/delete.html'
+    success_url = reverse_lazy('pm:list_proyek')
