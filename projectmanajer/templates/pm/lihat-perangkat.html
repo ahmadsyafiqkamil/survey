@@ -2,51 +2,29 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 {% block costum_css %}
-    <link href="{% static 'assets/css/survey/survey.css' %}" type="text/css" rel="stylesheet"/>
+    {#    <link href="{% static 'assets/css/survey/survey.css' %}" type="text/css" rel="stylesheet"/>#}
+    <link href="https://surveyjs.azureedge.net/1.0.96/survey.css" type="text/css" rel="stylesheet"
 {% endblock %}
 {% block costum_js %}
 
-    <script src="{% static 'assets/js/plugins/survey/survey.jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/survey/popper.min.js' %}"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
+    <script src="https://surveyjs.azureedge.net/1.0.96/survey.jquery.min.js"></script>
 
     <script type="text/javascript">
         var surveyJSON =
-        {{ perangkat.perangkat | safe}}
+            {{ perangkat.perangkat | safe}}
         ;
 
-        var defaultThemeColors = Survey
-            .StylesManager
-            .ThemeColors["default"];
-        defaultThemeColors["$main-color"] = "#1565c0";
-        defaultThemeColors["$main-hover-color"] = "#0d47a1";
-        defaultThemeColors["$text-color"] = "#4a4a4a";
-        defaultThemeColors["$header-color"] = "#7ff07f";
+        window.survey = new Survey.Model(surveyJSON);
 
-        defaultThemeColors["$header-background-color"] = "#4a4a4a";
-        defaultThemeColors["$body-container-background-color"] = "#f8f8f8";
-        Survey.StylesManager.applyTheme();
+        survey
+            .onComplete
+            .add(function (result) {
+                document
+                    .querySelector('#surveyResult')
+                    .textContent = "Result JSON:\n" + JSON.stringify(result.data, null, 3);
+            });
 
-
-        var survey = new Survey.Model(surveyJSON);
-        $("#surveyContainer").Survey({
-            model: survey,
-            onComplete: sendDataToServer
-        });
-
-        function sendDataToServer(survey) {
-            var resultAsString = JSON.stringify(survey.data);
-            alert(resultAsString); //send Ajax request to your web server.
-        }
-
-
-        survey.surveyPostId = 'e544a02f-7fff-4ffb-b62d-6a9aa16efd7c';
-
-        //You may call survey.sendResult function as another option.
-        function sendDataToServer(survey) {
-            survey.sendResult('e544a02f-7fff-4ffb-b62d-6a9aa16efd7c');
-        }
+        $("#surveyElement").Survey({model: survey});
 
     </script>
 {% endblock %}
@@ -89,13 +67,14 @@
             </div>
 
             <div class="panel-body">
-                <div id="surveyContainer"></div>
+                <div id="surveyElement"></div>
+                <div id="surveyResult"></div>
 
                 {{ perangkat.perangkat }}
 
                 <div class="col-lg-12 text-right">
                     <label class="display-block text-semibold">
-{#                        <a href="{% url 'pm:hapus_perangkat' perangkat.pk%}"><input type="button" class="btn bg-danger" value="Hapus Perangkat" ></a>#}
+                        {#                        <a href="{% url 'pm:hapus_perangkat' perangkat.pk%}"><input type="button" class="btn bg-danger" value="Hapus Perangkat" ></a>#}
 
 
                     </label>
