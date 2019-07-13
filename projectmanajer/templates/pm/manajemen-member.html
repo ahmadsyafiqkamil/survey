@@ -39,16 +39,18 @@
                 <table class="table datatable-basic">
                     <thead>
                     <tr>
-                        <th class="text-center">proyek</th>
-                        <th class="text-center">Penanggung Jawab</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Email</th>
                         <th class="text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for proyek in proyeks %}
+
+
+                    {% for user in data_user %}
                         <tr>
-                            <td >{{ proyek.nama }}</td>
-                            <td >{{ proyek.pjProyek }}</td>
+                            <td>{{ user.user_name }}</td>
+                            <td>{{ user.email }}</td>
                             <td class="text-center">
                                 <ul class="icons-list">
                                     <li class="dropdown">
@@ -56,16 +58,14 @@
                                             <i class="icon-menu9"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a href="{% url 'pm:view_perangkat' proyek.pk %}">PERANGKAT</a></li>
-                                            <li><a href="{% url 'pm:detail_proyek' proyek.pk %}">DETAIL</a></li>
-                                            <li><a href="{% url 'pm:hapus_proyek' proyek.pk %}">HAPUS</a></li>
+                                            <li><a href="{% url 'pm:detail_member' user.id %}">Detail</a></li>
+                                            <li><a href="{{ user.id }}">Hapus</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </td>
                         </tr>
                     {% endfor %}
-
                     </tbody>
                 </table>
 
@@ -73,16 +73,15 @@
             </div>
         </div>
 
-        <!-- /sidebar classes -->
 
     </div>
 
 
 {% endblock %}
 {% block costum_js %}
-
     <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+
     <script>
         $.extend($.fn.dataTable.defaults, {
             autoWidth: false,
@@ -109,7 +108,5 @@
         // Basic datatable
         $('.datatable-basic').DataTable();
     </script>
-
-
 {% endblock %}
 {% block costum_css %}{% endblock %}

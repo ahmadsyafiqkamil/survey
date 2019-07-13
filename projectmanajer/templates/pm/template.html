@@ -1,0 +1,56 @@
+% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+    <div class="page-header-content">
+        <div class="page-title">
+            <h5>
+                <i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Header</span> -
+                Breadcrumb
+                <small class="display-block">Basic breadcrumb inside page header</small>
+            </h5>
+        </div>
+
+        <div class="heading-elements">
+            <ul class="breadcrumb heading-text">
+                <li><a href="{% url 'pm:dashboard' %}"><i class="icon-home2 position-left"></i> Home</a></li>
+                <li><a href="components_breadcrumbs.html">Components</a></li>
+                <li class="active">Location</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+
+        <!-- Sidebars overview -->
+        <div class="panel panel-success ">
+            <div class="panel-heading">
+                <h5 class="panel-title">Project</h5>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+            </div>
+        </div>
+
+        <!-- /sidebar classes -->
+
+    </div>
+
+
+{% endblock %}
+{% block costum_js %}
+
+    <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+    
+
+
+{% endblock %}
+{% block costum_css %}{% endblock %}

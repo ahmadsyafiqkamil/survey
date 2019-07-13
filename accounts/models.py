@@ -87,15 +87,15 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name='Alamat Email',
         max_length=255,
         unique=True,
     )
-    # user_name = models.CharField(max_length=255)
-    active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False) # a admin user; non super-user
-    surveyor = models.BooleanField(default=False)
-    analis = models.BooleanField(default=False)
+    user_name = models.CharField(max_length=255, blank= True , verbose_name="Nama Anggota")
+    active = models.BooleanField(default=True, verbose_name="Status Aktif")
+    staff = models.BooleanField(default=False, verbose_name="Status Manajer Proyek") # a admin user; non super-user
+    surveyor = models.BooleanField(default=False, verbose_name="Status Surveyor")
+    analis = models.BooleanField(default=False , verbose_name="Status Analis")
     admin = models.BooleanField(default=False) # a superuser
     timestamp = models.DateTimeField(auto_now_add= True)
     # notice the absence of a "Password field", that's built in.
@@ -111,13 +111,16 @@ class User(AbstractBaseUser):
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
+
+    def get_user_name(self):
+        return self.user_name
     
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
     
     def __str__(self):              # __unicode__ on Python 2
-        return self.email
+        return self.user_name
     
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

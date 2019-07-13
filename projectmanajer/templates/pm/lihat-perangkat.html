@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% block costum_css %}
     {#    <link href="{% static 'assets/css/survey/survey.css' %}" type="text/css" rel="stylesheet"/>#}
-    <link href="https://surveyjs.azureedge.net/1.0.96/survey.css" type="text/css" rel="stylesheet"
+    <link href="https://surveyjs.azureedge.net/1.0.96/survey.css" type="text/css" rel="stylesheet"/>
 {% endblock %}
 {% block costum_js %}
 
@@ -11,7 +11,11 @@
 
     <script type="text/javascript">
         var surveyJSON =
-            {{ perangkat.perangkat | safe}}
+            {% if perangkat.perangkat is None %}
+
+                {% else %}
+                {{ perangkat.perangkat | safe}}
+                {% endif %}
         ;
 
         window.survey = new Survey.Model(surveyJSON);
@@ -70,11 +74,19 @@
                 <div id="surveyElement"></div>
                 <div id="surveyResult"></div>
 
-                {{ perangkat.perangkat }}
+                {% if perangkat.perangkat is None %}
 
+                {% else %}
+                {{ perangkat.perangkat }}
+                {% endif %}
                 <div class="col-lg-12 text-right">
                     <label class="display-block text-semibold">
-                        {#                        <a href="{% url 'pm:hapus_perangkat' perangkat.pk%}"><input type="button" class="btn bg-danger" value="Hapus Perangkat" ></a>#}
+                        <a href="{% url 'pm:update_perangkat' perangkat.pk %}"><input type="button"
+                                                                                      class="btn bg-blue"
+                                                                                      value="Update Perangkat"></a>
+                        <a href="{% url 'pm:hapus_perangkat' perangkat.pk %}"><input type="button"
+                                                                                      class="btn bg-warning"
+                                                                                      value="Hapus Perangkat"></a>
 
 
                     </label>

@@ -64,11 +64,15 @@ organisasiFormSet = modelformset_factory(
 class formPerangkat(forms.ModelForm):
     class Meta:
         model = perangkat
-        fields = ['proyek', 'perangkat']
+        fields = ['nama_perangkat','proyek', 'perangkat']
 
         widgets = {
             'perangkat' : forms.Textarea(attrs={
                 'placeholder': 'Masukkan hasil dari tab JsonEditor',
+
+            }),
+            'nama_perangkat':forms.TextInput(attrs={
+                'placeholder': 'Masukkan Nama Perangkat',
             })
         }
 
@@ -76,5 +80,19 @@ class formPerangkat(forms.ModelForm):
         super(formPerangkat, self).__init__(*args, **kwargs)
         self.fields['proyek'].queryset = proyek.objects.exclude(id__in=perangkat.objects.values("proyek_id"))
 
+class formMember(forms.ModelForm):
+    class Meta :
+        model = User
+        fields =['user_name','email','active','staff','surveyor','analis']
+
+    labels = {
+        'user_name': 'Nama Anggota',
+        'email': 'Alamat Email',
+        'active': "Status Aktif",
+        'staff': 'Status Project Manajer',
+        'surveyor': 'Status Surveyor',
+        'analis': 'Status Analis',
+
+    }
 
 

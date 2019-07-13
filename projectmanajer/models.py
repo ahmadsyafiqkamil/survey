@@ -49,6 +49,7 @@ class organisasi(models.Model):
 
 
 class perangkat(models.Model):
+    nama_perangkat = models.CharField(max_length=255,blank=True)
     perangkat = JSONField()
     proyek = models.OneToOneField(proyek, on_delete=models.CASCADE, related_name='perangkat')
     penanggung_jawab = models.CharField(max_length=50, verbose_name="Nama Penanggung Jawab")
@@ -57,6 +58,6 @@ class perangkat(models.Model):
         db_table = 'perangkat'
 
     def __str__(self):
-        return self.perangkat
+        return self.nama_perangkat
 
 
