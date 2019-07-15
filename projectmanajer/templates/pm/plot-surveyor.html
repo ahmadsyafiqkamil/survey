@@ -37,6 +37,34 @@
             </div>
 
             <div class="panel-body">
+                <form method="post" action="">
+
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                        <fieldset class="content-group">
+                            <div class="form-group">
+
+                                <label class="control-label col-lg-2">{{ field.label }}</label>
+                                <div class="col-lg-10">
+                                    {{ field |add_class:'form-control' }}
+                                </div>
+                            </div>
+                        </fieldset>
+                    {% endfor %}
+                    <br>
+
+                    <br>
+                    <div class="col-lg-12 text-right">
+                        <label class="display-block text-semibold">
+                            <button type="submit" class="btn bg-blue">
+                                Submit
+                                <i class="glyphicon glyphicon-tasasition-right"></i></button>
+                        </label>
+                    </div>
+                </form>
             </div>
         </div>
 

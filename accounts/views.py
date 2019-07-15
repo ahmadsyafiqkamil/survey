@@ -35,7 +35,7 @@ def register(request):
 				user = User.objects.get(email=request.POST['email'])
 				return render(request, 'account/register.html', {'error': 'nama sudah terpakai'})
 			except User.DoesNotExist:
-				user = User.objects.create_user(email=request.POST['email'], password=request.POST['ps1'])
+				user = User.objects.create_user(email=request.POST['email'],user_name=request.POST['username'], password=request.POST['ps1'])
 				auth.login(request, user)
 				return redirect('accounts:login')
 		else:

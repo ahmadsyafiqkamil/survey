@@ -3,8 +3,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
-from .form import proyekForm, organisasiFormSet, formPerangkat , formMember
-from .models import organisasi, proyek, perangkat
+from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor
+from .models import organisasi, proyek, perangkat, anggota_survey
 from accounts.models import User
 from django.forms.models import modelform_factory
 
@@ -142,17 +142,38 @@ class update_perangkat(generic.edit.UpdateView):
         form.save()
         return redirect('pm:list_proyek')
 
+
 class manajemen_member(generic.ListView):
     model = User
     template_name = 'pm/manajemen-member.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['data_user'] = User.objects.exclude(admin=True,staff=True)
+        context['data_user'] = User.objects.exclude(admin=True, staff=True)
         return context
+
 
 class detail_member(generic.edit.UpdateView):
     model = User
     form_class = formMember
     template_name = 'pm/detail-member.html'
+
+
+class hapus_member(generic.edit.DeleteView):
+    model = User
+    template_name = 'pm/delete.html'
+    success_url = reverse_lazy('pm:manajemen_member')
+
+
+class plot_surveyor(generic.edit.CreateView):
+    model = anggota_survey
+    # fields = ['survey_organisasi','anggota']
+    form_class = formPlotSurveyor
+    template_name = 'pm/plot-surveyor.html'
+    success_url = reverse_lazy('pm:list_proyek')
+
+    def get_form_kwargs(self):
+        kw = super(plot_surveyor,self).get_form_kwargs()
+        kw['id_organisasi'] = self.kwargs.get('pk')
+        return kw
 

@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email,  password=None, is_staff = False,is_admin = False ,is_analis = False, is_surveyor = False,is_active = True ):
+    def create_user(self, email,user_name=None,  password=None, is_staff = False,is_admin = False ,is_analis = False, is_surveyor = False,is_active = True ):
         """
         Creates and saves a User with the given email and password.
         """
@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
         )
-        # user.user_name = user_name
+        user.user_name = user_name
         user.staff = is_staff
         user.admin = is_admin
         user.active = is_active

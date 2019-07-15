@@ -21,9 +21,11 @@ urlpatterns = [
     path('lihat-perangkat/<int:pk>', views.lihat_perangkat.as_view(), name='view_perangkat'),
     path('delete-perangkat/<int:pk>', views.hapus_perangkat.as_view(), name='hapus_perangkat'),
     path('update-perangkat/<int:pk>', views.update_perangkat.as_view(), name='update_perangkat'),
-#    path analis
+#    path member
     path('manajemen-member/', views.manajemen_member.as_view(), name='manajemen_member'),
     path('detail-member/<int:pk>', views.detail_member.as_view(), name='detail_member'),
+    path('hapus-member/<int:pk>', views.hapus_member.as_view(), name='hapus_member'),
+    path('plot-surveyor/<int:pk>', views.plot_surveyor.as_view(), name='plot_surveyor'),
 
 
 ]

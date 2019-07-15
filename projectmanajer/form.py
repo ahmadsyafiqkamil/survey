@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import modelformset_factory
-from .models import proyek, organisasi, perangkat
+from .models import proyek, organisasi, perangkat, anggota_survey
 import json
 from accounts.models import User
 
@@ -85,14 +85,16 @@ class formMember(forms.ModelForm):
         model = User
         fields =['user_name','email','active','staff','surveyor','analis']
 
-    labels = {
-        'user_name': 'Nama Anggota',
-        'email': 'Alamat Email',
-        'active': "Status Aktif",
-        'staff': 'Status Project Manajer',
-        'surveyor': 'Status Surveyor',
-        'analis': 'Status Analis',
+class formPlotSurveyor(forms.ModelForm):
+    class Meta:
+        model = anggota_survey
+        fields = ['survey_organisasi','anggota']
 
-    }
+    def __init__(self, *args, **kwargs):
+        id_organisasi = kwargs.pop('id_organisasi')
+        super(formPlotSurveyor, self).__init__(*args, **kwargs)
+        self.fields['anggota'].queryset = User.objects.filter(surveyor=True)
+        self.fields['survey_organisasi'].queryset = organisasi.objects.filter(id=id_organisasi)
+
 
 

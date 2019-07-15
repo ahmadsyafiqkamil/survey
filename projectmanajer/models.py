@@ -24,13 +24,11 @@ class proyek(models.Model):
     def get_organisasi(self):
         return self.organisasi.all().values_list('nama_organisasi', flat=True)
 
-
     def get_pj_organisasi(self):
         return self.organisasi.all().values_list('narasumber', flat=True)
 
     def get_perangkat(self):
         return self.perangkat.all().values_list('perangkat', flat=True)
-
 
     def get_narasumber_perangkat(self):
         return self.perangkat.all().values_list('penanggung_jawab', flat=True)
@@ -49,7 +47,7 @@ class organisasi(models.Model):
 
 
 class perangkat(models.Model):
-    nama_perangkat = models.CharField(max_length=255,blank=True)
+    nama_perangkat = models.CharField(max_length=255, blank=True)
     perangkat = JSONField()
     proyek = models.OneToOneField(proyek, on_delete=models.CASCADE, related_name='perangkat')
     penanggung_jawab = models.CharField(max_length=50, verbose_name="Nama Penanggung Jawab")
@@ -61,3 +59,7 @@ class perangkat(models.Model):
         return self.nama_perangkat
 
 
+class anggota_survey(models.Model):
+    anggota = models.OneToOneField(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
+    survey_organisasi = models.ForeignKey(organisasi, on_delete=models.CASCADE, related_name='organisasi',
+                                          verbose_name='Organisasi')
