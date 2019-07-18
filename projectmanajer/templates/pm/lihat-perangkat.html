@@ -12,9 +12,9 @@
     <script type="text/javascript">
         var surveyJSON =
             {% if perangkat.perangkat is None %}
-                {% else %}
+            {% else %}
                 {{ perangkat.perangkat | safe}}
-                {% endif %}
+            {% endif %}
         ;
 
         window.survey = new Survey.Model(surveyJSON);
@@ -59,7 +59,7 @@
         <!-- Sidebars overview -->
         <div class="panel panel-success ">
             <div class="panel-heading">
-                <h5 class="panel-title">Proyek </h5>
+                <h5 class="panel-title">Project</h5>
                 <div class="heading-elements">
                     <ul class="icons-list">
                         <li><a data-action="collapse"></a></li>
@@ -74,22 +74,29 @@
                 <div id="surveyResult"></div>
 
                 {% if perangkat.perangkat is None %}
+                    belum ada perangkat
+
+                    <div class="col-lg-12 text-right">
+                        <label class="display-block text-semibold">
+                            <a href="{% url 'pm:create_perangkat' %}"><input type="button"
+                                                                             class="btn bg-blue"
+                                                                             value="Buat Perangkat"></a>
+                        </label>
+                    </div>
 
                 {% else %}
-                {{ perangkat.perangkat }}
+
+                    <div class="col-lg-12 text-right">
+                        <label class="display-block text-semibold">
+                            <a href="{% url 'pm:update_perangkat' perangkat.pk %}"><input type="button"
+                                                                                          class="btn bg-blue"
+                                                                                          value="Update Perangkat"></a>
+                            <a href="{% url 'pm:hapus_perangkat' perangkat.pk %}"><input type="button"
+                                                                                         class="btn bg-warning"
+                                                                                         value="Hapus Perangkat"></a>
+                        </label>
+                    </div>
                 {% endif %}
-                <div class="col-lg-12 text-right">
-                    <label class="display-block text-semibold">
-                        <a href="{% url 'pm:update_perangkat' perangkat.pk %}"><input type="button"
-                                                                                      class="btn bg-blue"
-                                                                                      value="Update Perangkat"></a>
-                        <a href="{% url 'pm:hapus_perangkat' perangkat.pk %}"><input type="button"
-                                                                                      class="btn bg-warning"
-                                                                                      value="Hapus Perangkat"></a>
-
-
-                    </label>
-                </div>
             </div>
 
         </div>

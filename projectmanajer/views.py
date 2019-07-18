@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
-from pip._vendor.html5lib.treewalkers import concatenateCharacterTokens
+
 
 from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor
 from .models import organisasi, proyek, perangkat, anggota_survey
@@ -101,17 +101,26 @@ class detailProyek(generic.TemplateView):
         context['organisasi'] = organisasi.objects.filter(proyek=self.kwargs.get('pk'))
         return context
 
-
+#
 class lihat_perangkat(generic.TemplateView):
     template_name = 'pm/lihat-perangkat.html'
 
     def get_context_data(self, *args, **kwargs):
-        print(self.kwargs.get('pk'))
         context = super(lihat_perangkat, self).get_context_data(*args, **kwargs)
-        context['perangkat'] = get_object_or_404(perangkat, proyek_id=self.kwargs.get('pk'))
-        # context['perangkat'] = perangkat.objects.filter(proyek_id=self.kwargs.get('pk'))
+        try:
+            context['perangkat'] = perangkat.objects.get(proyek_id=self.kwargs.get('pk'))
+        except perangkat.DoesNotExist:
+            context['perangkat'] = None
         return context
 
+# class lihat_perangkat(generic.ListView):
+#     model = perangkat
+#     template_name = 'pm/lihat-perangkat.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(lihat_perangkat, self).get_context_data( **kwargs)
+#         context['perangkat'] = perangkat.objects.filter(proyek_id=self.kwargs.get('pk'))
+#         return context
 
 class deleteOrganisasi(generic.DeleteView):
     model = organisasi

@@ -58,6 +58,9 @@ class perangkat(models.Model):
     def __str__(self):
         return self.nama_perangkat
 
+    def get_proyek(self):
+        return self.proyek.nama
+
 
 class anggota_survey(models.Model):
     anggota = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
@@ -72,3 +75,12 @@ class anggota_survey(models.Model):
 
     def get_user_name(self):
         return self.anggota.user_name
+
+    def get_organisasi_name(self):
+        return self.survey_organisasi.nama_organisasi
+
+    def get_project(self):
+        return self.survey_organisasi.proyek.nama
+
+    def get_id_project(self):
+        return self.survey_organisasi.proyek.pk
