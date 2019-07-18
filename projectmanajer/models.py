@@ -60,6 +60,15 @@ class perangkat(models.Model):
 
 
 class anggota_survey(models.Model):
-    anggota = models.OneToOneField(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
+    anggota = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
     survey_organisasi = models.ForeignKey(organisasi, on_delete=models.CASCADE, related_name='organisasi',
                                           verbose_name='Organisasi')
+
+    class Meta:
+        db_table = 'anggota_survey'
+
+    def __str__(self):
+        return self.anggota.user_name
+
+    def get_user_name(self):
+        return self.anggota.user_name

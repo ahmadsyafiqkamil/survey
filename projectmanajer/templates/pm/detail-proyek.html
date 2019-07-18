@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block breadcrumb %}
     <div class="page-header-content">
         <div class="page-title">
@@ -39,25 +40,20 @@
                 {{ proyek.user.get_full_name }}
                 <br>
                 <a href="{% url 'pm:update_proyek' proyek.id %}">EDIT</a>
-                <table class="table">
+
+{#            ============#}
+            <table class="table datatable-basic">
                     <thead>
                     <tr>
-                        <th>
-                            Nama Organisasi
-                        </th>
-                        <th>
-                            Nama Narasumber
-                        </th>
-                        <th>
-                            Aksi
-                        </th>
+                        <th class="text-center">Nama Organisasi</th>
+                        <th class="text-center">Nama Narasumber</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     {% for foo in organisasi %}
                         <tr>
-                            <td>{{ foo.nama_organisasi }}</td>
+                            <td >{{ foo.nama_organisasi }}</td>
                             <td>
                                 {% if foo.narasumber is None %}
                                     Belum ada Narasumber
@@ -65,7 +61,7 @@
                                     {{ foo.narasumber }}
                                 {% endif %}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <ul class="icons-list">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -75,17 +71,19 @@
                                             <li><a href="{% url 'pm:detail_organisasi' foo.pk %}">EDIT</a></li>
                                             <li><a href="{% url 'pm:hapus_organisasi' foo.pk %}">HAPUS</a></li>
                                             <li><a href="{% url 'pm:plot_surveyor' foo.pk %}">PLOT SURVEYOR</a></li>
+                                            <li><a href="{% url 'pm:detail_organisasi_surveyor' foo.pk %}">DETAIL SURVEYOR</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </td>
                         </tr>
-
-
                     {% endfor %}
 
                     </tbody>
                 </table>
+{#            ============#}
+
+
             </div>
         </div>
 
@@ -95,3 +93,38 @@
 
 
 {% endblock %}
+
+{% block costum_js %}
+
+    <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+    <script>
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px'
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable();
+    </script>
+
+
+{% endblock %}
+{% block costum_css %}{% endblock %}

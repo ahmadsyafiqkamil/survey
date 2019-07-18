@@ -44,7 +44,7 @@ class proyekForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(proyekForm, self).__init__(*args, **kwargs)
-        self.fields['user'].queryset = User.objects.filter(staff= True)
+        self.fields['user'].queryset = User.objects.filter(staff=True)
 
 
 organisasiFormSet = modelformset_factory(
@@ -64,14 +64,14 @@ organisasiFormSet = modelformset_factory(
 class formPerangkat(forms.ModelForm):
     class Meta:
         model = perangkat
-        fields = ['nama_perangkat','proyek', 'perangkat']
+        fields = ['nama_perangkat', 'proyek', 'perangkat']
 
         widgets = {
-            'perangkat' : forms.Textarea(attrs={
+            'perangkat': forms.Textarea(attrs={
                 'placeholder': 'Masukkan hasil dari tab JsonEditor',
 
             }),
-            'nama_perangkat':forms.TextInput(attrs={
+            'nama_perangkat': forms.TextInput(attrs={
                 'placeholder': 'Masukkan Nama Perangkat',
             })
         }
@@ -80,21 +80,20 @@ class formPerangkat(forms.ModelForm):
         super(formPerangkat, self).__init__(*args, **kwargs)
         self.fields['proyek'].queryset = proyek.objects.exclude(id__in=perangkat.objects.values("proyek_id"))
 
+
 class formMember(forms.ModelForm):
-    class Meta :
+    class Meta:
         model = User
-        fields =['user_name','email','active','staff','surveyor','analis']
+        fields = ['user_name', 'email', 'active', 'staff', 'surveyor', 'analis']
+
 
 class formPlotSurveyor(forms.ModelForm):
     class Meta:
         model = anggota_survey
-        fields = ['survey_organisasi','anggota']
+        fields = ['survey_organisasi', 'anggota']
 
     def __init__(self, *args, **kwargs):
         id_organisasi = kwargs.pop('id_organisasi')
         super(formPlotSurveyor, self).__init__(*args, **kwargs)
         self.fields['anggota'].queryset = User.objects.filter(surveyor=True)
         self.fields['survey_organisasi'].queryset = organisasi.objects.filter(id=id_organisasi)
-
-
-

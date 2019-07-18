@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
+from pip._vendor.html5lib.treewalkers import concatenateCharacterTokens
+
 from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor
 from .models import organisasi, proyek, perangkat, anggota_survey
 from accounts.models import User
@@ -104,8 +106,10 @@ class lihat_perangkat(generic.TemplateView):
     template_name = 'pm/lihat-perangkat.html'
 
     def get_context_data(self, *args, **kwargs):
+        print(self.kwargs.get('pk'))
         context = super(lihat_perangkat, self).get_context_data(*args, **kwargs)
         context['perangkat'] = get_object_or_404(perangkat, proyek_id=self.kwargs.get('pk'))
+        # context['perangkat'] = perangkat.objects.filter(proyek_id=self.kwargs.get('pk'))
         return context
 
 
@@ -149,7 +153,7 @@ class manajemen_member(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['data_user'] = User.objects.exclude(admin=True, staff=True)
+        context['data_user'] = User.objects.exclude(staff=True)
         return context
 
 
@@ -157,6 +161,7 @@ class detail_member(generic.edit.UpdateView):
     model = User
     form_class = formMember
     template_name = 'pm/detail-member.html'
+    success_url = reverse_lazy('pm:manajemen_member')
 
 
 class hapus_member(generic.edit.DeleteView):
@@ -173,7 +178,27 @@ class plot_surveyor(generic.edit.CreateView):
     success_url = reverse_lazy('pm:list_proyek')
 
     def get_form_kwargs(self):
-        kw = super(plot_surveyor,self).get_form_kwargs()
+        kw = super(plot_surveyor, self).get_form_kwargs()
         kw['id_organisasi'] = self.kwargs.get('pk')
         return kw
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(plot_surveyor, self).get_context_data( **kwargs)
+    #     context['proyek'] = get_object_or_404(organisasi, orga=self.kwargs.get('pk'))
+    #     return context
+
+
+class detail_organisasi_surveyor(generic.TemplateView):
+    model = anggota_survey
+    template_name = 'pm/detail-organisasi-surveyor.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(detail_organisasi_surveyor, self).get_context_data(*args, **kwargs)
+        context['surveyor'] = anggota_survey.objects.filter(survey_organisasi=self.kwargs.get('pk'))
+        # context['surveyor'] = anggota_survey.objects.values_list('anggota__user_name',flat= True).filter(survey_organisasi=self.kwargs.get('pk'))
+        return context
+
+class hapus_organisasi_surveyor(generic.edit.DeleteView):
+    model = anggota_survey
+    template_name = 'pm/delete.html'
+    success_url = reverse_lazy('pm:list_proyek')
