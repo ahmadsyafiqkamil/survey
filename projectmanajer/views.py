@@ -4,8 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
 
-
-from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor
+from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor,organisasiForm
 from .models import organisasi, proyek, perangkat, anggota_survey
 from accounts.models import User
 from django.forms.models import modelform_factory
@@ -73,6 +72,30 @@ def buatproject(request):
     })
 
 
+class tambahOrganisasi(generic.edit.CreateView):
+    model = organisasi
+    # fields = ['nama_organisasi','narasumber','proyek']
+    form_class = organisasiForm
+    template_name = 'pm/tambah-organisasi.html'
+    success_url = reverse_lazy('pm:list_proyek')
+
+    def get_form_kwargs(self):
+        print(self.kwargs.get('pk'))
+        kw = super(tambahOrganisasi, self).get_form_kwargs()
+        kw['id_proyek'] = self.kwargs.get('pk')
+        return kw
+
+@method_decorator(login_required, name='dispatch')
+class updateProyek(generic.edit.UpdateView):
+    model = proyek
+    fields = ['nama', 'deskripsi', 'user', 'pjProyek']
+    template_name = 'pm/update-proyek.html'
+
+    def form_valid(self, form):
+        post = form.save()
+        return redirect('pm:list_proyek')
+
+
 @method_decorator(login_required, name='dispatch')
 class dashboardView(generic.TemplateView):
     template_name = 'pm/dashboard.html'
@@ -81,14 +104,6 @@ class dashboardView(generic.TemplateView):
 @method_decorator(login_required, name='dispatch')
 class perangkatView(generic.TemplateView):
     template_name = 'pm/perangkat.html'
-
-
-class buat_perangkat(generic.edit.CreateView):
-    model = perangkat
-    # fields = ['proyek','perangkat']
-    form_class = formPerangkat
-    template_name = 'pm/buat-perangkat.html'
-    success_url = reverse_lazy('pm:perangkat')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -101,7 +116,7 @@ class detailProyek(generic.TemplateView):
         context['organisasi'] = organisasi.objects.filter(proyek=self.kwargs.get('pk'))
         return context
 
-#
+
 class lihat_perangkat(generic.TemplateView):
     template_name = 'pm/lihat-perangkat.html'
 
@@ -113,14 +128,6 @@ class lihat_perangkat(generic.TemplateView):
             context['perangkat'] = None
         return context
 
-# class lihat_perangkat(generic.ListView):
-#     model = perangkat
-#     template_name = 'pm/lihat-perangkat.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(lihat_perangkat, self).get_context_data( **kwargs)
-#         context['perangkat'] = perangkat.objects.filter(proyek_id=self.kwargs.get('pk'))
-#         return context
 
 class deleteOrganisasi(generic.DeleteView):
     model = organisasi
@@ -134,15 +141,12 @@ class hapus_perangkat(generic.edit.DeleteView):
     success_url = reverse_lazy('pm:list_proyek')
 
 
-@method_decorator(login_required, name='dispatch')
-class updateProyek(generic.edit.UpdateView):
-    model = proyek
-    fields = ['nama', 'deskripsi', 'user', 'pjProyek']
-    template_name = 'pm/update-proyek.html'
-
-    def form_valid(self, form):
-        post = form.save()
-        return redirect('pm:list_proyek')
+class buat_perangkat(generic.edit.CreateView):
+    model = perangkat
+    # fields = ['proyek','perangkat']
+    form_class = formPerangkat
+    template_name = 'pm/buat-perangkat.html'
+    success_url = reverse_lazy('pm:perangkat')
 
 
 class update_perangkat(generic.edit.UpdateView):
@@ -191,11 +195,6 @@ class plot_surveyor(generic.edit.CreateView):
         kw['id_organisasi'] = self.kwargs.get('pk')
         return kw
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(plot_surveyor, self).get_context_data( **kwargs)
-    #     context['proyek'] = get_object_or_404(organisasi, orga=self.kwargs.get('pk'))
-    #     return context
-
 
 class detail_organisasi_surveyor(generic.TemplateView):
     model = anggota_survey
@@ -206,6 +205,7 @@ class detail_organisasi_surveyor(generic.TemplateView):
         context['surveyor'] = anggota_survey.objects.filter(survey_organisasi=self.kwargs.get('pk'))
         # context['surveyor'] = anggota_survey.objects.values_list('anggota__user_name',flat= True).filter(survey_organisasi=self.kwargs.get('pk'))
         return context
+
 
 class hapus_organisasi_surveyor(generic.edit.DeleteView):
     model = anggota_survey

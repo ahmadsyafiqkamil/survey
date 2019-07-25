@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import JSONField
 from accounts.models import User
 
 
+
 # Create your models here.
 class proyek(models.Model):
     nama = models.CharField(max_length=255, verbose_name="Nama Proyek")
@@ -15,6 +16,7 @@ class proyek(models.Model):
     pjProyek = models.CharField(max_length=255, verbose_name="Penanggung Jawav Proyek")
 
     # id_user = models.ForeignKey(analis,on_delete = models.CASCADE)
+
     class Meta:
         db_table = 'proyek'
 
@@ -45,6 +47,8 @@ class organisasi(models.Model):
     def __str__(self):
         return self.nama_organisasi
 
+    def get_proyek_id(self):
+        return proyek.pk
 
 class perangkat(models.Model):
     nama_perangkat = models.CharField(max_length=255, blank=True)
@@ -63,9 +67,15 @@ class perangkat(models.Model):
 
 
 class anggota_survey(models.Model):
+    PILIHAN_STATUS = [
+        (1,'Sudah Melakukan Survey'),
+        (0,'Belum Melakukan Survey'),
+
+    ]
     anggota = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
     survey_organisasi = models.ForeignKey(organisasi, on_delete=models.CASCADE, related_name='organisasi',
                                           verbose_name='Organisasi')
+    status = models.CharField(max_length=2,choices=PILIHAN_STATUS, default=0)
 
     class Meta:
         db_table = 'anggota_survey'
@@ -77,10 +87,10 @@ class anggota_survey(models.Model):
         return self.anggota.user_name
 
     def get_organisasi_name(self):
-        return self.survey_organisasi.nama_organisasi
+        return self.survey_organisasi
 
     def get_project(self):
-        return self.survey_organisasi.proyek.nama
+        return self.survey_organisasi.proyek
 
     def get_id_project(self):
-        return self.survey_organisasi.proyek.pk
+        return self.survey_organisasi.proyek_id

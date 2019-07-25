@@ -107,7 +107,10 @@ class User(AbstractBaseUser):
     
     # def get_username(self):
     #     return self.user_name
-    
+
+    class Meta:
+        db_table = 'User'
+
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
@@ -160,7 +163,10 @@ class User(AbstractBaseUser):
 class LoggedInUser(models.Model):
     user = models.OneToOneField(User, related_name='logged_in_user', on_delete=models.CASCADE)
     session_key = models.CharField(max_length=32, null=True,blank=True)
-    
+
+    class Meta:
+        db_table = 'LoggedInUser'
+
     def __str__(self):
         return self.user.get_full_name
     

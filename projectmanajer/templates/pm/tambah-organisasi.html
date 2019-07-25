@@ -37,14 +37,7 @@
             </div>
 
             <div class="panel-body">
-                {% if perangkat.perangkat is None %}
-                    Belum ada perangkat
-                {% else %}
-
-
-
-                    {#                    <div id="surveyResult"></div>#}
-                    <form method="post" action="">
+                <form method="post" action="">
 
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
@@ -62,6 +55,11 @@
                         </fieldset>
                     {% endfor %}
                     <br>
+
+
+                    <div id="surveyContainer">
+                        <div id="creatorElement"></div>
+                    </div>
                     <br>
                     <div class="col-lg-12 text-right">
                         <label class="display-block text-semibold">
@@ -70,14 +68,7 @@
                                 <i class="glyphicon glyphicon-tasasition-right"></i></button>
                         </label>
                     </div>
-
-                    <br><br><br>
-                    <div class="form-group">
-
-                        <div id="surveyElement"></div>
-                    </div>
-
-                {% endif %}
+                </form>
             </div>
         </div>
 
@@ -85,34 +76,9 @@
 
     </div>
 
+
 {% endblock %}
 {% block costum_js %}
 
-    <script src="https://surveyjs.azureedge.net/1.0.96/survey.jquery.min.js"></script>
-
-    <script type="text/javascript">
-        var surveyJSON =
-            {% if perangkat.perangkat is None %}
-            {% else %}
-                {{ perangkat.perangkat | safe}}
-            {% endif %}
-        ;
-
-        window.survey = new Survey.Model(surveyJSON);
-
-        survey
-            .onComplete
-            .add(
-                function (result) {
-                    {#document.querySelector('#surveyResult').textContent = "Result JSON:\n" + JSON.stringify(result.data, null, 3);#}
-                    $("#id_hasil_survey").val(JSON.stringify(result.data, null, 3));
-
-                });
-
-        $("#surveyElement").Survey({model: survey});
-
-    </script>
 {% endblock %}
-{% block costum_css %}
-    <link href="https://surveyjs.azureedge.net/1.0.96/survey.css" type="text/css" rel="stylesheet"/>
-{% endblock %}
+{% block costum_css %}{% endblock %}

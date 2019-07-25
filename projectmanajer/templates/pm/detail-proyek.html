@@ -41,8 +41,14 @@
                 <br>
                 <a href="{% url 'pm:update_proyek' proyek.id %}">EDIT</a>
 
-{#            ============#}
-            <table class="table datatable-basic">
+                <div class="col-lg-12 text-right">
+                    <label class="display-block text-semibold">
+                        <a href="{% url 'pm:tambah_organisasi' proyek.id %}"><input type="button"
+                                                                                    class="btn bg-blue"
+                                                                                    value="Tambah Organisasi"></a>
+                    </label>
+                </div>
+                <table class="table datatable-basic">
                     <thead>
                     <tr>
                         <th class="text-center">Nama Organisasi</th>
@@ -53,7 +59,7 @@
                     <tbody>
                     {% for foo in organisasi %}
                         <tr>
-                            <td >{{ foo.nama_organisasi }}</td>
+                            <td>{{ foo.nama_organisasi }}</td>
                             <td>
                                 {% if foo.narasumber is None %}
                                     Belum ada Narasumber
@@ -71,7 +77,8 @@
                                             <li><a href="{% url 'pm:detail_organisasi' foo.pk %}">EDIT</a></li>
                                             <li><a href="{% url 'pm:hapus_organisasi' foo.pk %}">HAPUS</a></li>
                                             <li><a href="{% url 'pm:plot_surveyor' foo.pk %}">PLOT SURVEYOR</a></li>
-                                            <li><a href="{% url 'pm:detail_organisasi_surveyor' foo.pk %}">DETAIL SURVEYOR</a></li>
+                                            <li><a href="{% url 'pm:detail_organisasi_surveyor' foo.pk %}">DETAIL
+                                                SURVEYOR</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -81,7 +88,7 @@
 
                     </tbody>
                 </table>
-{#            ============#}
+                {#            ============#}
 
 
             </div>

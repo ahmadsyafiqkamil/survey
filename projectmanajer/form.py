@@ -60,7 +60,6 @@ organisasiFormSet = modelformset_factory(
     }
 )
 
-
 class formPerangkat(forms.ModelForm):
     class Meta:
         model = perangkat
@@ -97,3 +96,14 @@ class formPlotSurveyor(forms.ModelForm):
         super(formPlotSurveyor, self).__init__(*args, **kwargs)
         self.fields['anggota'].queryset = User.objects.filter(surveyor=True)
         self.fields['survey_organisasi'].queryset = organisasi.objects.filter(id=id_organisasi)
+
+
+class organisasiForm(forms.ModelForm):
+    class Meta:
+        model = organisasi
+        fields = ['nama_organisasi', 'narasumber', 'proyek']
+
+    def __init__(self, *args, **kwargs):
+        id_proyek = kwargs.pop('id_proyek')
+        super(organisasiForm, self).__init__(*args, **kwargs)
+        self.fields['proyek'].queryset = proyek.objects.filter(id=id_proyek)

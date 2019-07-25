@@ -22,6 +22,13 @@
 
         var creator = new SurveyCreator.SurveyCreator("creatorElement", creatorOptions);
 
+        creator.saveSurveyFunc = function () {
+
+            var jsonEl = document.getElementById('surveyJSON');
+            jsonEl = creator.text;
+            console.log(jsonEl)
+            $("#id_perangkat").val(jsonEl);
+        }
 
         if (creator) creator.haveCommercialLicense = true;
     </script>
