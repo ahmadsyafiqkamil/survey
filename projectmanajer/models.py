@@ -75,13 +75,14 @@ class anggota_survey(models.Model):
     anggota = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', verbose_name='Surveyor')
     survey_organisasi = models.ForeignKey(organisasi, on_delete=models.CASCADE, related_name='organisasi',
                                           verbose_name='Organisasi')
-    status = models.CharField(max_length=2,choices=PILIHAN_STATUS, default=0)
+    status = models.IntegerField(choices=PILIHAN_STATUS, default=0)
 
     class Meta:
         db_table = 'anggota_survey'
 
     def __str__(self):
-        return self.anggota.user_name
+        return self.survey_organisasi.nama_organisasi
+        # return self.survey_organisasi
 
     def get_user_name(self):
         return self.anggota.user_name
@@ -94,3 +95,6 @@ class anggota_survey(models.Model):
 
     def get_id_project(self):
         return self.survey_organisasi.proyek_id
+
+    def get_id(self):
+        return self.pk

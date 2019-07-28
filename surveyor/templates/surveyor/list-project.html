@@ -59,7 +59,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for s in list_project %}
+                                    {% for s in list_project_belum_survey %}
                                         <tr>
 
                                             <td>{{ forloop.counter }}</td>
@@ -73,9 +73,11 @@
                                                         </a>
                                                         <ul class="dropdown-menu dropdown-menu-right">
                                                             <li>
+{#                                                                <a href="{% url 'surveyor:survey_organisasi' s.get_id %}">SURVEY</a>#}
                                                                 <a href="{% url 'surveyor:survey_organisasi' s.get_id_project %}">SURVEY</a>
                                                             </li>
                                                             <li><a href="{% url 'surveyor:rekap_survey' %}">REKAP</a>
+{#                                                            <li><a href="{% url 'surveyor:rekap_survey' %}">{{ s. }}</a>#}
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -89,8 +91,84 @@
                             </div>
 
                             <div class="tab-pane" id="basic-tab2">
-                                Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid
-                                laeggin.
+                                 <table class="table datatable-basic">
+                                    <thead>
+                                    <tr>
+
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Project</th>
+                                        <th class="text-center">Organisasi</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for s in hasil_survey %}
+                                        <tr>
+
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ s.get_proyek_name }}</td>
+                                            <td>{{ s.get_organisasi_name }}</td>
+                                            <td class="text-center">
+                                                <ul class="icons-list">
+                                                    <li class="dropdown">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="icon-menu9"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu dropdown-menu-right">
+                                                            <li>
+                                                                <a href="{% url 'surveyor:edit_survey' s.id %}">EDIT SURVEY</a>
+                                                            </li>
+                                                            <li><a href="{% url 'surveyor:rekap_survey' %}">REKAP</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+{#                            <table class="table datatable-basic">#}
+{#                                    <thead>#}
+{#                                    <tr>#}
+{##}
+{#                                        <th class="text-center">#</th>#}
+{#                                        <th class="text-center">Project</th>#}
+{#                                        <th class="text-center">Organisasi</th>#}
+{#                                        <th class="text-center">Actions</th>#}
+{#                                    </tr>#}
+{#                                    </thead>#}
+{#                                    <tbody>#}
+{#                                    {% for s in list_project %}#}
+{#                                        <tr>#}
+{##}
+{#                                            <td>{{ forloop.counter }}</td>#}
+{#                                            <td>{{ s.get_project }}</td>#}
+{#                                            <td>{{ s.get_organisasi_name }}</td>#}
+{#                                            <td class="text-center">#}
+{#                                                <ul class="icons-list">#}
+{#                                                    <li class="dropdown">#}
+{#                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+{#                                                            <i class="icon-menu9"></i>#}
+{#                                                        </a>#}
+{#                                                        <ul class="dropdown-menu dropdown-menu-right">#}
+{#                                                            <li>#}
+{#                                                                <a href="{% url 'surveyor:survey_organisasi' s.get_id_project %}">SURVEY</a>#}
+{#                                                            </li>#}
+{#                                                            <li><a href="{% url 'surveyor:rekap_survey' %}">REKAP</a>#}
+{#                                                            </li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </td>#}
+{#                                        </tr>#}
+{#                                    {% endfor %}#}
+{##}
+{#                                    </tbody>#}
+{#                                </table>#}
+
                             </div>
 
                         </div>

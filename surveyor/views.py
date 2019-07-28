@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from projectmanajer.models import anggota_survey, perangkat,proyek
+from projectmanajer.models import anggota_survey, perangkat, proyek
 from .form import surveyForm
 from accounts.models import User
 from .models import survey
@@ -20,24 +20,25 @@ class list_project(generic.TemplateView):
     template_name = 'surveyor/list-project.html'
 
     def get_context_data(self, **kwargs):
-        print(self.request.user)
+        print(self.request.user.pk)
         context = super(list_project, self).get_context_data(**kwargs)
-        context['list_project'] = anggota_survey.objects.filter(anggota=self.request.user)
+        context['hasil_survey'] = survey.objects.filter(anggota_survey__anggota_id=self.request.user,
+                                                        anggota_survey__status=1).select_related()
+        context['list_project_belum_survey'] = anggota_survey.objects.filter(anggota_id=self.request.user, status=0)
         return context
 
 
 class survey_organisasi(generic.edit.CreateView):
     template_name = 'surveyor/survey-organisasi.html'
     model = survey
-    fields = ['hasil_survey']
+    form_class = surveyForm
     success_url = reverse_lazy("surveyor:list_project")
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.anggota_survey_id = anggota_survey.objects.get(anggota_id=self.request.user.pk).pk
-        self.object.save()
-        # anggota_survey.objects.filter(pk=).update(status = 1)
-        return super().form_valid((form))
+        form.save()
+        anggota_survey_id = survey.objects.latest('anggota_survey_id').get_anggota_survey()
+        anggota_survey.objects.filter(id=anggota_survey_id).update(status=1)
+        return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         print(self.request.user.pk)
@@ -56,5 +57,12 @@ class rekap_survey(generic.TemplateView):
 
 class edit_survey(generic.edit.UpdateView):
     template_name = 'surveyor/edit-survey.html'
+    # form_class = surveyForm
     model = survey
     fields = ['hasil_survey']
+
+    def get_context_data(self, **kwargs):
+        print(self.kwargs.get('pk'))
+        context = super(edit_survey, self).get_context_data(**kwargs)
+        context['data'] = survey.objects.get(id=self.kwargs.get('pk'))
+        return context

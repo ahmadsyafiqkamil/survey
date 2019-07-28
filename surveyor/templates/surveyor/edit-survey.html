@@ -37,18 +37,8 @@
             </div>
 
             <div class="panel-body">
-                {% if perangkat.perangkat is None %}
-                    Belum ada perangkat
-                {% else %}
 
-
-
-                    {#                    <div id="surveyResult"></div>#}
-                    <form method="post" action="">
-
-                    {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
+                <form>
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                         <fieldset class="content-group">
@@ -61,8 +51,6 @@
                             </div>
                         </fieldset>
                     {% endfor %}
-                    <br>
-                    <br>
                     <div class="col-lg-12 text-right">
                         <label class="display-block text-semibold">
                             <button type="submit" class="btn bg-blue">
@@ -70,18 +58,15 @@
                                 <i class="glyphicon glyphicon-tasasition-right"></i></button>
                         </label>
                     </div>
+                </form>
+                <br><br><br>
+                <div id="surveyElement"></div>
 
-                    <br><br><br>
-                    <div class="form-group">
-
-                        <div id="surveyElement"></div>
-                    </div>
-
-                {% endif %}
             </div>
         </div>
+    </div>
 
-        <!-- /sidebar classes -->
+    <!-- /sidebar classes -->
 
     </div>
 
@@ -91,11 +76,19 @@
     <script src="https://surveyjs.azureedge.net/1.0.96/survey.jquery.min.js"></script>
 
     <script type="text/javascript">
+        var surveyValueChanged = function (sender, options) {
+            var el = document.getElementById(options.name);
+            if (el) {
+                el.value = options.value;
+            }
+        };
+
+        Survey
+            .StylesManager
+            .applyTheme("darkrose");
+
         var surveyJSON =
-            {% if perangkat.perangkat is None %}
-            {% else %}
-                {{ perangkat.perangkat | safe}}
-            {% endif %}
+            {{ data.get_survey | safe}}
         ;
 
         window.survey = new Survey.Model(surveyJSON);
@@ -106,10 +99,11 @@
                 function (result) {
                     {#document.querySelector('#surveyResult').textContent = "Result JSON:\n" + JSON.stringify(result.data, null, 3);#}
                     $("#id_hasil_survey").val(JSON.stringify(result.data, null, 3));
-
                 });
 
-        $("#surveyElement").Survey({model: survey});
+        survey.data = {{ data.hasil_survey |safe }};
+
+            $("#surveyElement").Survey({model: survey, onValueChanged:surveyValueChanged});;
 
     </script>
 {% endblock %}
