@@ -6,8 +6,6 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 from accounts.models import User
 
-
-
 # Create your models here.
 class proyek(models.Model):
     nama = models.CharField(max_length=255, verbose_name="Nama Proyek")
@@ -98,3 +96,16 @@ class anggota_survey(models.Model):
 
     def get_id(self):
         return self.pk
+
+
+class analis_proyek(models.Model):
+    proyek = models.ForeignKey(proyek,on_delete=models.CASCADE, related_name='proyek', verbose_name='Proyek')
+    analis = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='Analis')
+
+    class Meta:
+        db_table = 'analis_proyek'
+
+    def __str__(self):
+        return self.analis.user_name
+
+

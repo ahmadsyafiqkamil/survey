@@ -51,7 +51,7 @@
                 <table class="table datatable-basic">
                     <thead>
                     <tr>
-{#                        <th class="text-center">#</th>#}
+                        <th class="text-center">#</th>
                         <th class="text-center">Nama Organisasi</th>
                         <th class="text-center">Nama Narasumber</th>
                         <th class="text-center">Actions</th>
@@ -60,7 +60,7 @@
                     <tbody>
                     {% for foo in organisasi %}
                         <tr>
-{#                            <td>{{ forloop.counter }}</td>#}
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ foo.nama_organisasi }}</td>
                             <td>
                                 {% if foo.narasumber is None %}

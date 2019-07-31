@@ -57,6 +57,8 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a href="{% url 'pm:view_perangkat' proyek.pk %}">PERANGKAT</a></li>
+                                            <li><a href="{% url 'pm:plot_analis' proyek.pk %}">PLOT ANALIS</a></li>
+                                            <li><a href="{% url 'pm:detail_analis_survey' proyek.pk %}">DETAIL ANALIS</a></li>
                                             <li><a href="{% url 'pm:detail_proyek' proyek.pk %}">DETAIL</a></li>
                                             <li><a href="{% url 'pm:hapus_proyek' proyek.pk %}">HAPUS</a></li>
                                         </ul>

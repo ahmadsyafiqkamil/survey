@@ -37,6 +37,7 @@ class survey_organisasi(generic.edit.CreateView):
     def form_valid(self, form):
         form.save()
         anggota_survey_id = survey.objects.latest('anggota_survey_id').get_anggota_survey()
+        print(anggota_survey_id)
         anggota_survey.objects.filter(id=anggota_survey_id).update(status=1)
         return super().form_valid(form)
 

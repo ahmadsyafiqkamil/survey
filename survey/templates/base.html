@@ -176,25 +176,16 @@
                             {% elif user.is_analis %}
                                 <li><a href="{% url 'analis:dashboard' %}"><i class="icon-home4"></i>
                                     <span>Dashboard</span></a></li>
-                                <li>
-                                    <a href="#"><i class="icon-stack2"></i> <span>New Project</span></a>
-                                    <ul>
-                                        {#                                    <li><a href="{%url 'organisasi'%}"><i class="glyphicon glyphicon-th"></i>New Organization</a></li>#}
-                                        {#                                    <li><a href="{%url 'perangkat'%}"><i class="glyphicon glyphicon-th-list"></i>New Tools</a></li>#}
-                                    </ul>
-                                </li>
+
+                                <li><a href="{% url 'analis:list_project' %} "><i class="icon-stack2"></i>
+                                    <span>Project</span></a></li>
+
 
                             {% elif user.is_surveyor %}
-                                <li><a href="{% url 'surveyor:dashboard' %}"><i class="icon-home4"></i><span>Dashboard</span></a></li>
-                                <li><a href="{% url 'surveyor:list_project' %}"><i class="icon-airplane2"></i><span>Project</span></a></li>
-{#                                <li>#}
-{#                                    <a href="#"><i class="icon-stack2"></i> <span>New Project</span></a>#}
-{#                                    <ul>#}
-{#                                                                            <li><a href="{%url 'organisasi'%}"><i class="glyphicon glyphicon-th"></i>New Organization</a></li>#}
-{#                                                                            <li><a href="{%url 'perangkat'%}"><i class="glyphicon glyphicon-th-list"></i>New Tools</a></li>#}
-{#                                    </ul>#}
-{#                                </li>#}
-
+                                <li><a href="{% url 'surveyor:dashboard' %}"><i
+                                        class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li><a href="{% url 'surveyor:list_project' %}"><i class="icon-airplane2"></i><span>Project</span></a>
+                                </li>
                             {% endif %}
 
                         </ul>

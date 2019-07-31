@@ -5,8 +5,10 @@ from django.views import generic
 from django.urls import reverse_lazy
 
 from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, formPlotSurveyor,organisasiForm
-from .models import organisasi, proyek, perangkat, anggota_survey
+from .models import organisasi, proyek, perangkat, anggota_survey,analis_proyek
 from accounts.models import User
+
+from django.db.models.functions import Length, Upper,Lower
 from django.forms.models import modelform_factory
 
 
@@ -197,7 +199,7 @@ class plot_surveyor(generic.edit.CreateView):
 
 
 class detail_organisasi_surveyor(generic.TemplateView):
-    model = anggota_survey
+    # model = anggota_survey
     template_name = 'pm/detail-organisasi-surveyor.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -211,3 +213,25 @@ class hapus_organisasi_surveyor(generic.edit.DeleteView):
     model = anggota_survey
     template_name = 'pm/delete.html'
     success_url = reverse_lazy('pm:list_proyek')
+
+class plot_analis(generic.edit.CreateView):
+    template_name = 'pm/plot-analis.html'
+    model = analis_proyek
+    fields = ['proyek','analis']
+    success_url = reverse_lazy('pm:list_proyek')
+
+class detail_analis_surveyor(generic.TemplateView):
+    template_name = 'pm/detail-analis-survey.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(detail_analis_surveyor, self).get_context_data(**kwargs)
+        try:
+            context['analis'] = analis_proyek.objects.filter(proyek_id=self.kwargs.get('pk'))
+        except perangkat.DoesNotExist:
+            context['analis'] = None
+        return context
+
+class delete_analis_surveyor(generic.edit.DeleteView):
+    model = analis_proyek
+    success_url = reverse_lazy('pm:list_proyek')
+    template_name = 'pm/delete.html'

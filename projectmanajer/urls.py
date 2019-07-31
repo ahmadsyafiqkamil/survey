@@ -31,6 +31,9 @@ urlpatterns = [
          name='detail_organisasi_surveyor'),
     path('hapus-organisasi-surveyor/<int:pk>', views.hapus_organisasi_surveyor.as_view(),
          name='hapus_organisasi_surveyor'),
-
+    # analis
+    path('plot-analis/<int:pk>', views.plot_analis.as_view(),name='plot_analis'),
+    path('detail-analis-surveyor/<int:pk>', views.detail_analis_surveyor.as_view(),name='detail_analis_survey'),
+    path('delete-analis-surveyor/<int:pk>', views.delete_analis_surveyor.as_view(),name='delete_analis_survey'),
 
 ]

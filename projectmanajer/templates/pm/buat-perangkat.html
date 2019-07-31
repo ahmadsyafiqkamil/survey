@@ -2,20 +2,17 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block costum_css %}
-    <link href="https://surveyjs.azureedge.net/1.0.96/survey-creator.css" type="text/css" rel="stylesheet"/>
+    <link href="https://surveyjs.azureedge.net/1.1.1/survey-creator.css" type="text/css" rel="stylesheet"/>
 
 {% endblock %}
 {% block costum_js %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-
-    <script src="https://surveyjs.azureedge.net/1.0.96/survey.ko.js"></script>
+    <script src="https://surveyjs.azureedge.net/1.1.1/survey.ko.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.min.js" type="text/javascript"
             charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js" type="text/javascript"
             charset="utf-8"></script>
-
-    <script src="https://surveyjs.azureedge.net/1.0.96/survey-creator.js"></script>
-
+    <script src="https://surveyjs.azureedge.net/1.1.1/survey-creator.js"></script>
     <script>
 
         var creatorOptions = {};
@@ -89,11 +86,6 @@
                         </fieldset>
                     {% endfor %}
                     <br>
-
-
-                    <div id="surveyContainer">
-                        <div id="creatorElement"></div>
-                    </div>
                     <br>
                     <div class="col-lg-12 text-right">
                         <label class="display-block text-semibold">
@@ -103,6 +95,10 @@
                         </label>
                     </div>
                 </form>
+                <br><br><br>
+                <div id="surveyContainer">
+                    <div id="creatorElement"></div>
+                </div>
             </div>
         </div>
 
