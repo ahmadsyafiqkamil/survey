@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block breadcrumb %}
+    <div class="page-header-content">
+        <div class="page-title">
+            <h5>
+                <i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Header</span> -
+                Breadcrumb
+                <small class="display-block">Basic breadcrumb inside page header</small>
+            </h5>
+        </div>
+
+        <div class="heading-elements">
+            <ul class="breadcrumb heading-text">
+                <li><a href="{% url 'pm:dashboard' %}"><i class="icon-home2 position-left"></i> Home</a></li>
+                <li><a href="components_breadcrumbs.html">Components</a></li>
+                <li class="active">Location</li>
+            </ul>
+        </div>
+</div>
+{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+
+        <!-- Sidebars overview -->
+        <div class="panel panel-success ">
+            <div class="panel-heading">
+                <h5 class="panel-title">Project</h5>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Organisasi</th>
+                        <th class="text-center">Surveyor</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for organisasi in organisasi %}
+                        <tr>
+                            <td >{{ forloop.counter }}</td>
+                            <td >{{ organisasi.survey_organisasi }}</td>
+                            <td >{{ organisasi.get_user_name }}</td>
+                            <td class="text-center">
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="{% url 'analis:hasil_survey' organisasi.pk %}">HASIL SURVEY</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- /sidebar classes -->
+
+    </div>
+
+
+{% endblock %}
+{% block costum_js %}
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+    <script>
+        $.extend($.fn.dataTable.defaults, {
+            autoWidth: false,
+            columnDefs: [{
+                orderable: false,
+                width: '100px'
+            }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+
+
+        // Basic datatable
+        $('.datatable-basic').DataTable();
+    </script>
+{% endblock %}
+{% block costum_css %}{% endblock %}

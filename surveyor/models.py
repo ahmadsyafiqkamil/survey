@@ -9,6 +9,7 @@ class survey(models.Model):
     hasil_survey = JSONField()
     anggota_survey = models.ForeignKey(anggota_survey, on_delete=models.CASCADE, related_name='anggota_survey',
                                        verbose_name='Organisasi')
+    file = models.FileField(upload_to='attachments')
 
     class Meta:
         db_table = 'survey'

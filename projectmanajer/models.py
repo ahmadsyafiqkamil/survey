@@ -48,6 +48,9 @@ class organisasi(models.Model):
     def get_proyek_id(self):
         return proyek.pk
 
+    # def get_surveyor(self):
+    #     return self.
+
 class perangkat(models.Model):
     nama_perangkat = models.CharField(max_length=255, blank=True)
     perangkat = JSONField()
