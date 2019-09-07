@@ -51,6 +51,8 @@
                             </div>
                         </fieldset>
                     {% endfor %}
+                    {#                <div class="file-uploader"><p>Your browser doesn't have Flash installed.</p></div>#}
+{{ uploadForm.attachments }}
                     <div class="col-lg-12 text-right">
                         <label class="display-block text-semibold">
                             <button type="submit" class="btn bg-blue">
@@ -73,6 +75,10 @@
 {% endblock %}
 {% block costum_js %}
 
+    <script type="text/javascript"
+            src="{% static 'assets/js/plugins/uploaders/plupload/plupload.full.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/js/plugins/uploaders/plupload/plupload.queue.min.js' %}"></script>
     <script src="https://surveyjs.azureedge.net/1.1.1/survey.jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -103,7 +109,29 @@
 
         survey.data = {{ data.hasil_survey |safe }};
 
-            $("#surveyElement").Survey({model: survey, onValueChanged:surveyValueChanged});;
+        $("#surveyElement").Survey({model: survey, onValueChanged: surveyValueChanged});
+        ;
+
+    </script>
+    <script>
+        $(".file-uploader").pluploadQueue({
+            runtimes: 'html5, html4, Flash, Silverlight',
+            url: 'assets/demo_data/uploader/plupload.json',
+            chunk_size: '300Kb',
+            unique_names: true,
+            filters: {
+                max_file_size: '300Kb',
+                mime_types: [{
+                    title: "Image files",
+                    extensions: "jpg,gif,png"
+                }]
+            },
+            resize: {
+                width: 320,
+                height: 240,
+                quality: 90
+            }
+        });
 
     </script>
 {% endblock %}

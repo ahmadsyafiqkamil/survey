@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from projectmanajer.models import anggota_survey, perangkat, proyek
-from .form import surveyForm
+from .form import surveyForm,UploadForm
 from accounts.models import User
-from .models import survey
+from .models import survey, lampiran
 from django.urls import reverse_lazy
 
 
@@ -44,13 +44,17 @@ class survey_organisasi(generic.edit.CreateView):
     def get_context_data(self, *args, **kwargs):
         print(self.request.user.pk)
         context = super(survey_organisasi, self).get_context_data(*args, **kwargs)
+        context['uploadForm'] = UploadForm
         try:
             context['perangkat'] = perangkat.objects.get(proyek_id=self.kwargs.get('pk'))
             context['survey'] = survey.objects.filter()
+
         except perangkat.DoesNotExist:
             context['perangkat'] = None
         return context
 
+class uploadLampiran(generic.edit.CreateView):
+    model = lampiran
 
 class rekap_survey(generic.TemplateView):
     template_name = 'surveyor/rekap-surveyor.html'
@@ -58,7 +62,7 @@ class rekap_survey(generic.TemplateView):
 
 class edit_survey(generic.edit.UpdateView):
     template_name = 'surveyor/edit-survey.html'
-    # form_class = surveyForm
+    # form_class = UploadForm
     model = survey
     fields = ['hasil_survey']
 
@@ -66,4 +70,9 @@ class edit_survey(generic.edit.UpdateView):
         print(self.kwargs.get('pk'))
         context = super(edit_survey, self).get_context_data(**kwargs)
         context['data'] = survey.objects.get(id=self.kwargs.get('pk'))
+        context['uploadForm'] = UploadForm
         return context
+
+
+
+

@@ -1,0 +1,14 @@
+{
+    "build": {
+        "active_branch": "testing",
+        "committed_datetime": "2019-08-08T02:24:01+07:00",
+        "committed_ts": 1565205841,
+        "committers": [
+            "ahmadsyafiqkamil"
+        ],
+        "origin": "https://github.com/ahmadsyafiqkamil/survey.git",
+        "sha": "3af8c517ca02a4912ccdd99accd349f441ab2dfd",
+        "summary": "hasil survey + pdf"
+    },
+    "files": {}
+}

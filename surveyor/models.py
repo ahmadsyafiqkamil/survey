@@ -9,13 +9,9 @@ class survey(models.Model):
     hasil_survey = JSONField()
     anggota_survey = models.ForeignKey(anggota_survey, on_delete=models.CASCADE, related_name='anggota_survey',
                                        verbose_name='Organisasi')
-    file = models.FileField(upload_to='attachments')
 
     class Meta:
         db_table = 'survey'
-
-    # def __init__(self):
-    #     return self.hasil_survey
 
     def get_proyek_id(self):
         return self.anggota_survey.survey_organisasi.organisasi.proyek.pk
@@ -31,3 +27,8 @@ class survey(models.Model):
 
     def get_anggota_survey(self):
         return self.anggota_survey_id
+
+
+class lampiran(models.Model):
+    file = models.FileField(upload_to='attachments')
+    survey = models.OneToOneField(survey, on_delete=models.CASCADE)
