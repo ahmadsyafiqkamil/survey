@@ -8,10 +8,6 @@ from .form import proyekForm, organisasiFormSet, formPerangkat, formMember, form
 from .models import organisasi, proyek, perangkat, anggota_survey,analis_proyek
 from accounts.models import User
 
-from django.db.models.functions import Length, Upper,Lower
-from django.forms.models import modelform_factory
-
-
 @method_decorator(login_required, name='dispatch')
 class listProyek(generic.ListView):
     model = proyek

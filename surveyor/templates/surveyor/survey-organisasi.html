@@ -61,6 +61,7 @@
                             </div>
                         </fieldset>
                     {% endfor %}
+
                     <br>
                     <br>
                     <div class="col-lg-12 text-right">
@@ -72,6 +73,8 @@
                     </div>
 
                     <br><br><br>
+{#                    <div class="file-uploader"><p>Your browser doesn't have Flash installed.</p></div>#}
+{#                    {{ uploadForm.as_p }}#}
                     <div class="form-group">
 
                         <div id="surveyElement"></div>
@@ -90,6 +93,12 @@
 
 {% endblock %}
 {% block costum_js %}
+
+    <script type="text/javascript"
+            src="{% static 'assets/js/plugins/uploaders/plupload/plupload.full.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/js/plugins/uploaders/plupload/plupload.queue.min.js' %}"></script>
+
 
     <script src="https://surveyjs.azureedge.net/1.1.1/survey.jquery.min.js"></script>
 
@@ -113,6 +122,27 @@
                 });
 
         $("#surveyElement").Survey({model: survey});
+
+    </script>
+    <script>
+    $(".file-uploader").pluploadQueue({
+        runtimes: 'html5, html4, Flash, Silverlight',
+        url: 'assets/demo_data/uploader/plupload.json',
+        chunk_size: '300Kb',
+        unique_names: true,
+        filters: {
+            max_file_size: '300Kb',
+            mime_types: [{
+                title: "Image files",
+                extensions: "jpg,gif,png"
+            }]
+        },
+        resize: {
+            width: 320,
+            height: 240,
+            quality: 90
+        }
+    });
 
     </script>
 {% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'analis.apps.AnalisConfig',
     'surveyor.apps.SurveyorConfig',
     'widget_tweaks',
+    'django_extensions',
 
 ]
 
@@ -152,4 +153,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
     }
+}
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
