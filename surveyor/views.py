@@ -73,6 +73,7 @@ class edit_survey(generic.edit.UpdateView):
         context['uploadForm'] = UploadForm
         return context
 
-
+class tes(generic.TemplateView):
+    template_name = 'surveyor/edit-survey.html'
 
 
