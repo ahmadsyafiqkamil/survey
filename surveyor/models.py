@@ -13,6 +13,9 @@ class survey(models.Model):
     class Meta:
         db_table = 'survey'
 
+    def __str__(self):
+        return self.get_organisasi_name()
+
     def get_proyek_id(self):
         return self.anggota_survey.survey_organisasi.organisasi.proyek.pk
 

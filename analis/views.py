@@ -1,3 +1,4 @@
+import nltk
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -42,3 +43,11 @@ class hasil_survey(generic.TemplateView):
 
 class rekap_survey(generic.TemplateView):
     template_name ='analis/rekap-survey.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(rekap_survey, self).get_context_data(**kwargs)
+        context['data'] = survey.objects.select_related().values_list("hasil_survey").filter(anggota_survey__survey_organisasi__proyek_id=self.kwargs.get('pk_proyek'))
+        data = survey.objects.select_related().values_list("hasil_survey").filter(anggota_survey__survey_organisasi__proyek_id=self.kwargs.get('pk_proyek'))
+
+        return context
+
