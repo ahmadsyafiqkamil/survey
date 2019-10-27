@@ -11,13 +11,13 @@ from django.urls import reverse_lazy
 @login_required
 def dashboard(request):
     if request.session.has_key('login'):
-        return render(request, 'surveyor/home.html')
+        return render(request, '../templates/surveyor/home.html')
     else:
         return redirect('login')
 
 
 class list_project(generic.TemplateView):
-    template_name = 'surveyor/list-project.html'
+    template_name = '../templates/surveyor/list-project.html'
 
     def get_context_data(self, **kwargs):
         print(self.request.user.pk)
@@ -29,7 +29,7 @@ class list_project(generic.TemplateView):
 
 
 class survey_organisasi(generic.edit.CreateView):
-    template_name = 'surveyor/survey-organisasi.html'
+    template_name = '../templates/surveyor/survey-organisasi.html'
     model = survey
     form_class = surveyForm
     success_url = reverse_lazy("surveyor:list_project")
@@ -57,11 +57,11 @@ class uploadLampiran(generic.edit.CreateView):
     model = lampiran
 
 class rekap_survey(generic.TemplateView):
-    template_name = 'surveyor/rekap-surveyor.html'
+    template_name = '../templates/surveyor/rekap-surveyor.html'
 
 
 class edit_survey(generic.edit.UpdateView):
-    template_name = 'surveyor/edit-survey.html'
+    template_name = '../templates/surveyor/edit-survey.html'
     # form_class = UploadForm
     model = survey
     fields = ['hasil_survey']
@@ -74,6 +74,6 @@ class edit_survey(generic.edit.UpdateView):
         return context
 
 class tes(generic.TemplateView):
-    template_name = 'surveyor/edit-survey.html'
+    template_name = '../templates/surveyor/edit-survey.html'
 
 

@@ -11,12 +11,12 @@ from surveyor.models import survey
 @login_required
 def dashboard(request):
     if request.session.has_key('login'):
-        return render(request, 'analis/dashboard.html')
+        return render(request, '../templates/analis/dashboard.html')
     else:
         return redirect('accounts:login')
 
 class list_project(generic.TemplateView):
-    template_name = 'analis/list-project.html'
+    template_name = '../templates/analis/list-project.html'
 
     def get_context_data(self, **kwargs):
         print(self.kwargs.get('pk'))
@@ -26,7 +26,7 @@ class list_project(generic.TemplateView):
 
 
 class list_organisasi(generic.TemplateView):
-    template_name = 'analis/list-organisasi.html'
+    template_name = '../templates/analis/list-organisasi.html'
 
     def get_context_data(self, **kwargs):
         context = super(list_organisasi, self).get_context_data(**kwargs)
@@ -34,7 +34,7 @@ class list_organisasi(generic.TemplateView):
         return context
 
 class hasil_survey(generic.TemplateView):
-    template_name = 'analis/hasil-survey.html'
+    template_name = '../templates/analis/hasil-survey.html'
 
     def get_context_data(self, **kwargs):
         context = super(hasil_survey, self).get_context_data(**kwargs)
@@ -42,12 +42,20 @@ class hasil_survey(generic.TemplateView):
         return context
 
 class rekap_survey(generic.TemplateView):
-    template_name ='analis/rekap-survey.html'
+    template_name = '../templates/analis/rekap-survey.html'
 
     def get_context_data(self, **kwargs):
         context = super(rekap_survey, self).get_context_data(**kwargs)
-        context['data'] = survey.objects.select_related().values_list("hasil_survey").filter(anggota_survey__survey_organisasi__proyek_id=self.kwargs.get('pk_proyek'))
+        # context['data'] = survey.objects.select_related().filter(anggota_survey__survey_organisasi__proyek_id=self.kwargs.get('pk_proyek'))
         data = survey.objects.select_related().values_list("hasil_survey").filter(anggota_survey__survey_organisasi__proyek_id=self.kwargs.get('pk_proyek'))
-
+        data_survey = []
+        data_survey.clear()
+        for x in data:
+            data_survey.append(x.hasil_survey)
+            
+        jumlah_organisasi = len(data)
+        kunci = data_survey[1].keys()
+        
+        
         return context
 

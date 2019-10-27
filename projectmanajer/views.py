@@ -12,14 +12,14 @@ from accounts.models import User
 class listProyek(generic.ListView):
     model = proyek
     context_object_name = 'proyeks'
-    template_name = 'pm/list_proyek.html'
+    template_name = '../templates/pm/list_proyek.html'
 
 
 @method_decorator(login_required, name='dispatch')
 class detailorganisasi(generic.edit.UpdateView):
     model = organisasi
     fields = ['nama_organisasi', 'narasumber']
-    template_name = 'pm/detail-organisasi.html'
+    template_name = '../templates/pm/detail-organisasi.html'
 
     def form_valid(self, form):
         post = form.save()
@@ -30,7 +30,7 @@ class detailorganisasi(generic.edit.UpdateView):
 class updateProyek(generic.edit.UpdateView):
     model = proyek
     fields = ['nama', 'deskripsi', 'user', 'pjProyek']
-    template_name = 'pm/update-proyek.html'
+    template_name = '../templates/pm/update-proyek.html'
 
     def form_valid(self, form):
         post = form.save()
@@ -39,7 +39,7 @@ class updateProyek(generic.edit.UpdateView):
 
 class deleteProyek(generic.edit.DeleteView):
     model = proyek
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'
     success_url = reverse_lazy('pm:list_proyek')
 
 
@@ -64,7 +64,7 @@ def buatproject(request):
         else:
             pass
 
-    return render(request, 'pm/proyek.html', {
+    return render(request, '../templates/pm/proyek.html', {
         'formProyek': formProyek,
         'formOrganisasi': formOrganisasi,
     })
@@ -74,7 +74,7 @@ class tambahOrganisasi(generic.edit.CreateView):
     model = organisasi
     # fields = ['nama_organisasi','narasumber','proyek']
     form_class = organisasiForm
-    template_name = 'pm/tambah-organisasi.html'
+    template_name = '../templates/pm/tambah-organisasi.html'
     success_url = reverse_lazy('pm:list_proyek')
 
     def get_form_kwargs(self):
@@ -87,7 +87,7 @@ class tambahOrganisasi(generic.edit.CreateView):
 class updateProyek(generic.edit.UpdateView):
     model = proyek
     fields = ['nama', 'deskripsi', 'user', 'pjProyek']
-    template_name = 'pm/update-proyek.html'
+    template_name = '../templates/pm/update-proyek.html'
 
     def form_valid(self, form):
         post = form.save()
@@ -96,17 +96,17 @@ class updateProyek(generic.edit.UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 class dashboardView(generic.TemplateView):
-    template_name = 'pm/dashboard.html'
+    template_name = '../templates/pm/dashboard.html'
 
 
 @method_decorator(login_required, name='dispatch')
 class perangkatView(generic.TemplateView):
-    template_name = 'pm/perangkat.html'
+    template_name = '../templates/pm/perangkat.html'
 
 
 @method_decorator(login_required, name='dispatch')
 class detailProyek(generic.TemplateView):
-    template_name = 'pm/detail-proyek.html'
+    template_name = '../templates/pm/detail-proyek.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(detailProyek, self).get_context_data(*args, **kwargs)
@@ -116,7 +116,7 @@ class detailProyek(generic.TemplateView):
 
 
 class lihat_perangkat(generic.TemplateView):
-    template_name = 'pm/lihat-perangkat.html'
+    template_name = '../templates/pm/lihat-perangkat.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(lihat_perangkat, self).get_context_data(*args, **kwargs)
@@ -129,13 +129,13 @@ class lihat_perangkat(generic.TemplateView):
 
 class deleteOrganisasi(generic.DeleteView):
     model = organisasi
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'
     success_url = reverse_lazy('pm:list_proyek')
 
 
 class hapus_perangkat(generic.edit.DeleteView):
     model = perangkat
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'
     success_url = reverse_lazy('pm:list_proyek')
 
 
@@ -143,7 +143,7 @@ class buat_perangkat(generic.edit.CreateView):
     model = perangkat
     # fields = ['proyek','perangkat']
     form_class = formPerangkat
-    template_name = 'pm/buat-perangkat.html'
+    template_name = '../templates/pm/buat-perangkat.html'
     success_url = reverse_lazy('pm:perangkat')
 
 
@@ -151,7 +151,7 @@ class update_perangkat(generic.edit.UpdateView):
     model = perangkat
     # fields = ['proyek','perangkat']
     form_class = formPerangkat
-    template_name = 'pm/update-perangkat.html'
+    template_name = '../templates/pm/update-perangkat.html'
 
     def form_valid(self, form):
         form.save()
@@ -160,7 +160,7 @@ class update_perangkat(generic.edit.UpdateView):
 
 class manajemen_member(generic.ListView):
     model = User
-    template_name = 'pm/manajemen-member.html'
+    template_name = '../templates/pm/manajemen-member.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -171,13 +171,13 @@ class manajemen_member(generic.ListView):
 class detail_member(generic.edit.UpdateView):
     model = User
     form_class = formMember
-    template_name = 'pm/detail-member.html'
+    template_name = '../templates/pm/detail-member.html'
     success_url = reverse_lazy('pm:manajemen_member')
 
 
 class hapus_member(generic.edit.DeleteView):
     model = User
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'
     success_url = reverse_lazy('pm:manajemen_member')
 
 
@@ -185,7 +185,7 @@ class plot_surveyor(generic.edit.CreateView):
     model = anggota_survey
     # fields = ['survey_organisasi','anggota']
     form_class = formPlotSurveyor
-    template_name = 'pm/plot-surveyor.html'
+    template_name = '../templates/pm/plot-surveyor.html'
     success_url = reverse_lazy('pm:list_proyek')
 
     def get_form_kwargs(self):
@@ -196,7 +196,7 @@ class plot_surveyor(generic.edit.CreateView):
 
 class detail_organisasi_surveyor(generic.TemplateView):
     # model = anggota_survey
-    template_name = 'pm/detail-organisasi-surveyor.html'
+    template_name = '../templates/pm/detail-organisasi-surveyor.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(detail_organisasi_surveyor, self).get_context_data(*args, **kwargs)
@@ -207,17 +207,17 @@ class detail_organisasi_surveyor(generic.TemplateView):
 
 class hapus_organisasi_surveyor(generic.edit.DeleteView):
     model = anggota_survey
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'
     success_url = reverse_lazy('pm:list_proyek')
 
 class plot_analis(generic.edit.CreateView):
-    template_name = 'pm/plot-analis.html'
+    template_name = '../templates/pm/plot-analis.html'
     model = analis_proyek
     fields = ['proyek','analis']
     success_url = reverse_lazy('pm:list_proyek')
 
 class detail_analis_surveyor(generic.TemplateView):
-    template_name = 'pm/detail-analis-survey.html'
+    template_name = '../templates/pm/detail-analis-survey.html'
 
     def get_context_data(self, **kwargs):
         context = super(detail_analis_surveyor, self).get_context_data(**kwargs)
@@ -230,4 +230,4 @@ class detail_analis_surveyor(generic.TemplateView):
 class delete_analis_surveyor(generic.edit.DeleteView):
     model = analis_proyek
     success_url = reverse_lazy('pm:list_proyek')
-    template_name = 'pm/delete.html'
+    template_name = '../templates/pm/delete.html'

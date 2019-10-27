@@ -23,9 +23,9 @@ def login(request):
 			else:
 				raise Http404("Halaman yang anda cari tidak ada")
 		else:
-			return render(request, 'account/login.html', {'error': 'Cek Username dan Password anda'})
+			return render(request, '../templates/account/login.html', {'error': 'Cek Username dan Password anda'})
 	else:
-		return render(request, 'account/login.html')
+		return render(request, '../templates/account/login.html')
 
 
 def register(request):
@@ -33,15 +33,15 @@ def register(request):
 		if request.POST['ps1'] == request.POST['ps2']:
 			try:
 				user = User.objects.get(email=request.POST['email'])
-				return render(request, 'account/register.html', {'error': 'nama sudah terpakai'})
+				return render(request, '../templates/account/register.html', {'error': 'nama sudah terpakai'})
 			except User.DoesNotExist:
 				user = User.objects.create_user(email=request.POST['email'],user_name=request.POST['username'], password=request.POST['ps1'])
 				auth.login(request, user)
 				return redirect('accounts:login')
 		else:
-			return render(request, 'account/register.html', {'errorps': 'password tidak sama'})
+			return render(request, '../templates/account/register.html', {'errorps': 'password tidak sama'})
 	else:
-		return render(request, 'account/register.html')
+		return render(request, '../templates/account/register.html')
 
 
 def logout(request):
